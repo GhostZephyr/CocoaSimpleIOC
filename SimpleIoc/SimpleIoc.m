@@ -368,7 +368,7 @@ typedef id (^makeInstance)(NSString*);
 -(id) makeInstance:(NSString*)tClass {
     //    NSString *getConstructorInfo = GetConstructorInfoMethodName;
     //    SEL getCtorSel = NSSelectorFromString(getConstructorInfo);
-    SEL buildSelector = NSSelectorFromString(BuildMethodName);
+    
     Class t = NSClassFromString(tClass);
     id instance = [[t alloc] init];
     if(![t conformsToProtocol:@protocol(IConstructorProvider)])
@@ -380,6 +380,7 @@ typedef id (^makeInstance)(NSString*);
     //    ConstructorInfo *(*func)(id, SEL) = (void*)getCtorMethod;
     //    ConstructorInfo *ctorInfo = func(instance, getCtorSel);
     ConstructorInfo *ctorInfo = [ctorInstance getConstructorInfo];
+    SEL buildSelector = NSSelectorFromString(ctorInfo.buildSelectorString);
     self.constructorInfos[tClass] = ctorInfo;
     NSMutableArray *parameters = [[NSMutableArray alloc] init];
     for (int i = 0; i < ctorInfo.parameterTypes.count; i++) {

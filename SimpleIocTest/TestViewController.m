@@ -1,37 +1,41 @@
 //
-//  TestViewController.m
+//  MainViewModel.m
 //  SimpleIoc
 //
-//  Created by qvod on 14-9-28.
+//  Created by qvod on 14-9-25.
 //  Copyright (c) 2014年 YF. All rights reserved.
 //
 
-#import "TestViewController.h"
-#import "SimpleIoc.h"
-
-@implementation TestViewController
-
+#import "MainViewModel.h"
+#import "ITestServiceA.h"
+#import "ITestServiceB.h"
+@interface MainViewModel()
+@property id<ITestServiceA> a;
+@end
+@implementation MainViewModel
 -(ConstructorInfo *)getConstructorInfo {
     ConstructorInfo *ctor = [[ConstructorInfo alloc] init];
-    ctor.parameterTypes = [[NSMutableArray alloc] initWithObjects:@protocol(ITestServiceA), [SampleUIViewControl class], nil];
+    ctor.parameterTypes = [[NSMutableArray alloc] initWithObjects:@protocol(ITestServiceA), @protocol(ITestServiceB),nil];
+    ctor.buildSelectorString = @"build:testB:";
     return ctor;
 }
 
--(void) build:(id<ITestServiceA>) testService testControl:(SampleUIViewControl*)control{
-    self.testServiceA = testService;
-    NSLog(@"工厂构造了 TestServiceViewController 并注入了 testService");
-}
--(void)viewDidLoad {
-    NSLog(@"已加载TestViewController viewDidLoad");
-    self.view.backgroundColor  = [[UIColor alloc] initWithWhite:1.0 alpha:1.0];
+-(void) build:(id<ITestServiceA>) a testB:(id<ITestServiceB>)b {
+    NSLog(@"MainViewModel 已经构造 testServiceA已被注入");
+    self.a = a;
 }
 
--(void)viewWillDisappear:(BOOL)animated {
-    NSLog(@"我要消失了 TestViewController 准备反注清理");
-    [[SimpleIoc defaultInstance] unRegisterInstance:[TestViewController class]];
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        NSLog(@"已初始化");
+    }
+    return self;
 }
 
--(void)dealloc {
-    NSLog(@"我要销毁了 TestViewController");
+- (void)dealloc
+{
+    NSLog(@"MainViewModel 已被销毁");
 }
 @end

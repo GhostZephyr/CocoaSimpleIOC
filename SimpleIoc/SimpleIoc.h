@@ -8,8 +8,8 @@
 //
 
 #import "ISimpleIoc.h"
-#import "SimpleIocConst.h"
 #import "IConstructorProvider.h"
+#import "ConstructorInfo.h"
 
 @interface SimpleIoc : NSObject <ISimpleIoc>
 /**

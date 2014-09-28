@@ -7,7 +7,14 @@
 //
 
 #import "ConstructorInfo.h"
-
+#import "SimpleIocConst.h"
 @implementation ConstructorInfo
-
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        self.buildSelectorString = BuildMethodName;
+    }
+    return self;
+}
 @end

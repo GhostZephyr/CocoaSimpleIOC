@@ -13,4 +13,9 @@
  *  储存Protocol
  */
 @property(nonatomic,copy) NSMutableArray *parameterTypes;
+
+/**
+ *  buildMethod Selector String
+ */
+@property(nonatomic,copy) NSString* buildSelectorString;
 @end
