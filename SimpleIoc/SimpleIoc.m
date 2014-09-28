@@ -7,6 +7,7 @@
 //
 
 #import "SimpleIoc.h"
+#import "SimpleIocConst.h"
 #import <Foundation/Foundation.h>
 #import "ConstructorInfo.h"
 #import <objc/runtime.h>
@@ -106,7 +107,7 @@ typedef id (^makeInstance)(NSString*);
             self.constructorInfos[classType] = @"";
         }
         makeInstance factory = ^(NSString* className) {
-           return [self makeInstance:className];
+            return [self makeInstance:className];
         };
         [self doRegister:nil classType:interfaceType factory:factory classKey:self.defaultKey];
         if(createInstanceImmediately) {
@@ -130,7 +131,7 @@ typedef id (^makeInstance)(NSString*);
         if([self.interfaceToClassMap objectForKey:classType] == nil) {
             self.interfaceToClassMap[classType] = @"";
         }
-    
+        
         makeInstance factory = ^(NSString* className) {
             return [self makeInstance:className];
         };
@@ -299,7 +300,7 @@ typedef id (^makeInstance)(NSString*);
                     }
                 }
             }
-
+            
         }
     }
 }
@@ -313,7 +314,7 @@ typedef id (^makeInstance)(NSString*);
         NSMutableDictionary *instances;
         if([self.instancesRegistry objectForKey:serviceType] == nil) {
             if([self.interfaceToClassMap objectForKey:serviceType] == nil) {
-                 [NSException raise:@"ActivationException" format:@"Type not found in cache: %@",serviceType];
+                [NSException raise:@"ActivationException" format:@"Type not found in cache: %@",serviceType];
             }
             instances = [[NSMutableDictionary alloc] init];
             [self.instancesRegistry setObject:instances forKey:serviceType];
@@ -365,8 +366,8 @@ typedef id (^makeInstance)(NSString*);
 }
 
 -(id) makeInstance:(NSString*)tClass {
-//    NSString *getConstructorInfo = GetConstructorInfoMethodName;
-//    SEL getCtorSel = NSSelectorFromString(getConstructorInfo);
+    //    NSString *getConstructorInfo = GetConstructorInfoMethodName;
+    //    SEL getCtorSel = NSSelectorFromString(getConstructorInfo);
     SEL buildSelector = NSSelectorFromString(BuildMethodName);
     Class t = NSClassFromString(tClass);
     id instance = [[t alloc] init];
@@ -375,9 +376,9 @@ typedef id (^makeInstance)(NSString*);
         return instance;
     }
     id<IConstructorProvider> ctorInstance = instance;
-//    IMP getCtorMethod = [instance methodForSelector:getCtorSel];
-//    ConstructorInfo *(*func)(id, SEL) = (void*)getCtorMethod;
-//    ConstructorInfo *ctorInfo = func(instance, getCtorSel);
+    //    IMP getCtorMethod = [instance methodForSelector:getCtorSel];
+    //    ConstructorInfo *(*func)(id, SEL) = (void*)getCtorMethod;
+    //    ConstructorInfo *ctorInfo = func(instance, getCtorSel);
     ConstructorInfo *ctorInfo = [ctorInstance getConstructorInfo];
     self.constructorInfos[tClass] = ctorInfo;
     NSMutableArray *parameters = [[NSMutableArray alloc] init];
@@ -405,7 +406,7 @@ typedef id (^makeInstance)(NSString*);
         [invocation invokeWithTarget:instance];
     }
     
-
+    
     return instance;
 }
 
@@ -448,6 +449,14 @@ typedef id (^makeInstance)(NSString*);
     return [self doGetService:NSStringFromClass(className) key:classKey];
 }
 
+
+-(id)getInstanceByProtocol:(Protocol *)protocol {
+    return [self doGetService:NSStringFromProtocol(protocol) key:self.defaultKey];
+}
+
+-(id)getInstanceByProtocol:(Protocol *)protocol protocolKey:(id)key {
+    return [self doGetService:NSStringFromProtocol(protocol) key:key];
+}
 //end
 
 
