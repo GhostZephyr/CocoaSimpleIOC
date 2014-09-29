@@ -53,12 +53,12 @@ typedef id (^makeInstance)(NSString*);
 
 //////////////////// 实现ISimpleIoc ////////////////////
 //begin
--(BOOL) containCreated:(Class) className {
+-(BOOL) containCreated:(NSString*) className {
     return [self containCreated:className key:nil];
 }
 
--(BOOL) containCreated:(Class) className key:(Class)classKey {
-    NSString *name = NSStringFromClass(className);
+-(BOOL) containCreated:(NSString*) className key:(Class)classKey {
+    NSString *name = className;
     if([self.instancesRegistry objectForKey:name] == nil) {
         return NO;
     }
@@ -73,12 +73,12 @@ typedef id (^makeInstance)(NSString*);
     return YES;
 }
 
--(BOOL) isRegistered:(Class) className {
+-(BOOL) isRegistered:(NSString*) className {
     return [self isRegistered:className key:self.defaultKey];
 }
 
--(BOOL) isRegistered:(Class) className key:(Class)classKey {
-    NSString *name = NSStringFromClass(className);
+-(BOOL) isRegistered:(NSString*) className key:(Class)classKey {
+    NSString *name = className;
     if([self.interfaceToClassMap objectForKey:name] == nil || [self.factories objectForKey:name] == nil) {
         return NO;
     }

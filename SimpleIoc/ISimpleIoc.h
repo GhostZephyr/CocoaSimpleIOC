@@ -16,7 +16,7 @@
  *  @param className  服务类型的名字
  *  @return 是否注入
  */
--(BOOL) containCreated:(Class) className;
+-(BOOL) containCreated:(NSString*) className;
 
 /*
  *  检测该对象是否已经创建
@@ -24,7 +24,7 @@
  *  @param classKey   类型的值
  *  @return 是否注入
  */
--(BOOL) containCreated:(Class) className key:(NSString*)classKey;
+-(BOOL) containCreated:(NSString*) className key:(NSString*)classKey;
 
 /**
  *  检测该类型是否已经注入
@@ -33,7 +33,7 @@
  *
  *  @return 结果
  */
--(BOOL) isRegistered:(Class) className;
+-(BOOL) isRegistered:(NSString*) className;
 
 /**
  *  检测该类型该键值是否已经注入
@@ -43,7 +43,7 @@
  *
  *  @return 结果
  */
--(BOOL) isRegistered:(Class) className key:(NSString*)classKey;
+-(BOOL) isRegistered:(NSString*) className key:(NSString*)classKey;
 
 /**
  *  注册接口的实现类
