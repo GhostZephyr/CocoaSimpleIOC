@@ -111,7 +111,7 @@ typedef id (^makeInstance)(NSString*);
         };
         [self doRegister:nil classType:interfaceType factory:factory classKey:self.defaultKey];
         if(createInstanceImmediately) {
-            [self getInstance:className];
+            [self getInstance:interfaceType];
         }
     }
 }
