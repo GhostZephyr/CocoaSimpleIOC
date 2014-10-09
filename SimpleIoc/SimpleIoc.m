@@ -58,13 +58,12 @@ typedef id (^makeInstance)(NSString*);
 }
 
 -(BOOL) containCreated:(NSString*) className key:(Class)classKey {
-    NSString *name = className;
-    if([self.instancesRegistry objectForKey:name] == nil) {
+    if([self.instancesRegistry objectForKey:className] == nil) {
         return NO;
     }
-    NSMutableDictionary *instances = [self.instancesRegistry objectForKey:name];
+    NSMutableDictionary *instances = [self.instancesRegistry objectForKey:className];
     if(classKey == nil) {
-        NSMutableDictionary *instances = [self.instancesRegistry objectForKey:name];
+        instances = [self.instancesRegistry objectForKey:className];
         return instances > 0;
     }
     if([instances objectForKey:classKey] == nil) {
@@ -106,8 +105,8 @@ typedef id (^makeInstance)(NSString*);
             self.interfaceToClassMap[interfaceType] = classType;
             self.constructorInfos[classType] = @"";
         }
-        makeInstance factory = ^(NSString* className) {
-            return [self makeInstance:className];
+        makeInstance factory = ^(NSString* name) {
+            return [self makeInstance:name];
         };
         [self doRegister:nil classType:interfaceType factory:factory classKey:self.defaultKey];
         if(createInstanceImmediately) {
@@ -132,8 +131,8 @@ typedef id (^makeInstance)(NSString*);
             self.interfaceToClassMap[classType] = @"";
         }
         
-        makeInstance factory = ^(NSString* className) {
-            return [self makeInstance:className];
+        makeInstance factory = ^(NSString* name) {
+            return [self makeInstance:name];
         };
         
         [self doRegister:classType classType:classType factory:factory classKey:self.defaultKey];
@@ -163,8 +162,8 @@ typedef id (^makeInstance)(NSString*);
             self.constructorInfos[classType] = @"";
         }
         
-        makeInstance factory = ^(NSString *className) {
-            return [self makeInstance:className];
+        makeInstance factory = ^(NSString *name) {
+            return [self makeInstance:name];
         };
         
         [self doRegister:classType classType:classType factory:factory classKey:classKey];
