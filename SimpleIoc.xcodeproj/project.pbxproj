@@ -20,8 +20,7 @@
 		0B08BA6E19D4151F00D3391B /* SampleUIViewControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B08BA6D19D4151F00D3391B /* SampleUIViewControl.m */; };
 		0B08BA7219D417C500D3391B /* ViewModelLocator.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B08BA7119D417C500D3391B /* ViewModelLocator.m */; };
 		0B08BA7519D419D500D3391B /* TestServiceC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B08BA7419D419D500D3391B /* TestServiceC.m */; };
-		0B08BA7619D41B0000D3391B /* libSimpleIoc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BB8EC3519CFB3D300248083 /* libSimpleIoc.a */; };
-		0BA2260419D7EA6800316E63 /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BA2260319D7EA6800316E63 /* TestViewController.m */; };
+		0B4633DD19E775BB00BEFA34 /* libSimpleIoc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BB8EC3519CFB3D300248083 /* libSimpleIoc.a */; };
 		0BB8EC6119CFC1BD00248083 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BB8EC6019CFC1BD00248083 /* Foundation.framework */; };
 		0BB8EC8F19CFC23B00248083 /* ConstructorInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BB8EC8619CFC23B00248083 /* ConstructorInfo.m */; };
 		0BB8EC9119CFC23B00248083 /* SimpleIoc.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BB8EC8E19CFC23B00248083 /* SimpleIoc.m */; };
@@ -77,8 +76,6 @@
 		0B08BA7119D417C500D3391B /* ViewModelLocator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewModelLocator.m; sourceTree = "<group>"; };
 		0B08BA7319D419D500D3391B /* TestServiceC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestServiceC.h; sourceTree = "<group>"; };
 		0B08BA7419D419D500D3391B /* TestServiceC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestServiceC.m; sourceTree = "<group>"; };
-		0BA2260219D7EA6800316E63 /* TestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestViewController.h; sourceTree = "<group>"; };
-		0BA2260319D7EA6800316E63 /* TestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestViewController.m; sourceTree = "<group>"; };
 		0BB8EC3519CFB3D300248083 /* libSimpleIoc.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSimpleIoc.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		0BB8EC4D19CFB3EB00248083 /* App.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = App.xcconfig; sourceTree = "<group>"; };
 		0BB8EC4E19CFB3EB00248083 /* Libraries.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Libraries.xcconfig; sourceTree = "<group>"; };
@@ -102,7 +99,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0B08BA7619D41B0000D3391B /* libSimpleIoc.a in Frameworks */,
+				0B4633DD19E775BB00BEFA34 /* libSimpleIoc.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -129,8 +126,6 @@
 				0B08BA3B19D413E400D3391B /* AppDelegate.m */,
 				0B08BA3D19D413E400D3391B /* ViewController.h */,
 				0B08BA3E19D413E400D3391B /* ViewController.m */,
-				0BA2260219D7EA6800316E63 /* TestViewController.h */,
-				0BA2260319D7EA6800316E63 /* TestViewController.m */,
 				0B08BA4019D413E400D3391B /* Main.storyboard */,
 				0B08BA4319D413E400D3391B /* Images.xcassets */,
 				0B08BA4519D413E400D3391B /* LaunchScreen.xib */,
@@ -345,7 +340,6 @@
 				0B08BA3C19D413E400D3391B /* AppDelegate.m in Sources */,
 				0B08BA3919D413E400D3391B /* main.m in Sources */,
 				0B08BA6E19D4151F00D3391B /* SampleUIViewControl.m in Sources */,
-				0BA2260419D7EA6800316E63 /* TestViewController.m in Sources */,
 				0B08BA6919D4149800D3391B /* MainViewModel.m in Sources */,
 				0B08BA7519D419D500D3391B /* TestServiceC.m in Sources */,
 				0B08BA7219D417C500D3391B /* ViewModelLocator.m in Sources */,
@@ -430,7 +424,6 @@
 		};
 		0BB8EC4419CFB3D300248083 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0BB8EC5019CFB3EB00248083 /* Project.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
@@ -505,7 +498,6 @@
 		};
 		0BB8EC4719CFB3D300248083 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0BB8EC4F19CFB3EB00248083 /* Library.xcconfig */;
 			buildSettings = {
 				GCC_PREFIX_HEADER = "";
 				OTHER_LDFLAGS = "-ObjC";

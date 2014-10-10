@@ -20,12 +20,12 @@
 @implementation ViewController
 - (IBAction)btnClick:(id)sender {
     //这是一个固化的ViewController 需要检测工厂中是否存在 如果不存在则注册一个
-    if(![[SimpleIoc defaultInstance] isRegistered:[TestViewController class]]) {
-        [[SimpleIoc defaultInstance] registerInstance:[TestViewController class]];
-    }
-    TestViewController *viewController = [[SimpleIoc defaultInstance] getInstance:[TestViewController class]];
-    
-    [self.navigationController pushViewController:viewController animated:true];
+//    if(![[SimpleIoc defaultInstance] isRegistered:[TestViewController class]]) {
+//        [[SimpleIoc defaultInstance] registerInstance:[TestViewController class]];
+//    }
+//    TestViewController *viewController = [[SimpleIoc defaultInstance] getInstance:[TestViewController class]];
+//    
+//    [self.navigationController pushViewController:viewController animated:true];
 }
 
 - (void)viewDidLoad {
