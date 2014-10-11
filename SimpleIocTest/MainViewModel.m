@@ -15,7 +15,17 @@
 -(ConstructorInfo *)getConstructorInfo {
     ConstructorInfo *ctor = [[ConstructorInfo alloc] init];
     ctor.parameterTypes = [[NSMutableArray alloc] initWithObjects:@protocol(ITestServiceA), nil];
+    ctor.buildSelectorString = NSStringFromSelector((@selector(build:)));
+    ctor.initializerSelectorString = NSStringFromSelector(@selector(init:));
     return ctor;
+}
+
+-(instancetype) init:(NSString*) key {
+    self = [super init];
+    if (self) {
+        NSLog(@"recive value:%@",key);
+    }
+    return self;
 }
 
 -(void) build:(id<ITestServiceA>) a {

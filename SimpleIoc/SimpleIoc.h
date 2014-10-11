@@ -9,6 +9,7 @@
 
 #import "ISimpleIoc.h"
 #import "IConstructorProvider.h"
+#import "ILocator.h"
 #import "ConstructorInfo.h"
 
 @interface SimpleIoc : NSObject <ISimpleIoc>

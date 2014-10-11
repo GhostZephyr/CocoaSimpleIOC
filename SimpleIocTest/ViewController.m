@@ -30,7 +30,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    MainViewModel *viewModel = [[SimpleIoc defaultInstance] getInstance:[MainViewModel class]];
+    
+    NSArray *arguments = [[NSArray alloc] initWithObjects:@"my custom arguments", nil];
+    MainViewModel *viewModel = [[SimpleIoc defaultInstance] getInstanceWithArguments:[MainViewModel class] arguments:arguments];
     // Do any additional setup after loading the view, typically from a nib.
 }
 

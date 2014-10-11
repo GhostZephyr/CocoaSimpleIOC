@@ -14,6 +14,7 @@
     self = [super init];
     if (self) {
         self.buildSelectorString = BuildMethodName;
+        self.initializerSelectorString = InitMethodName;
     }
     return self;
 }

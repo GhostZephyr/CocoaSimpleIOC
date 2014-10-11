@@ -76,6 +76,7 @@
 		0B08BA7119D417C500D3391B /* ViewModelLocator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewModelLocator.m; sourceTree = "<group>"; };
 		0B08BA7319D419D500D3391B /* TestServiceC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestServiceC.h; sourceTree = "<group>"; };
 		0B08BA7419D419D500D3391B /* TestServiceC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestServiceC.m; sourceTree = "<group>"; };
+		0B907C7D19E8C9F20012A103 /* ILocator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILocator.h; sourceTree = "<group>"; };
 		0BB8EC3519CFB3D300248083 /* libSimpleIoc.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSimpleIoc.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		0BB8EC4D19CFB3EB00248083 /* App.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = App.xcconfig; sourceTree = "<group>"; };
 		0BB8EC4E19CFB3EB00248083 /* Libraries.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Libraries.xcconfig; sourceTree = "<group>"; };
@@ -216,6 +217,7 @@
 		0BB8EC3719CFB3D300248083 /* SimpleIoc */ = {
 			isa = PBXGroup;
 			children = (
+				0B907C7D19E8C9F20012A103 /* ILocator.h */,
 				0BB8EC8519CFC23B00248083 /* ConstructorInfo.h */,
 				0BB8EC8619CFC23B00248083 /* ConstructorInfo.m */,
 				0BB8EC8919CFC23B00248083 /* IConstructorProvider.h */,

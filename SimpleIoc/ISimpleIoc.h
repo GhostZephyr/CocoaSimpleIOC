@@ -92,7 +92,7 @@
  *  @param className 对象类型
  *  @param factory   工厂闭包
  */
--(void) registerInstance:(Class) className factory:(id(^)(Class className))factory;
+-(void) registerInstance:(Class) className factory:(id(^)(NSString *className, NSArray *args))factory;
 
 /**
  *  注册对象 自定义工厂
@@ -101,7 +101,7 @@
  *  @param factory                   工厂闭包
  *  @param createInstanceImmediately 是否立即创建
  */
--(void) registerInstance:(Class) className factory:(id(^)(Class className))factory createInstanceImmediately:(BOOL)createInstanceImmediately;
+-(void) registerInstance:(Class) className factory:(id(^)(NSString *className, NSArray *args))factory createInstanceImmediately:(BOOL)createInstanceImmediately;
 /**
  *  注册对象 自定义工厂
  *
@@ -109,7 +109,7 @@
  *  @param factory   工厂闭包
  *  @param classKey  键值
  */
--(void) registerInstance:(Class) className factory:(id(^)(Class className))factory
+-(void) registerInstance:(Class) className factory:(id(^)(NSString *className, NSArray *args))factory
                      key:(NSString*)classKey;
 /**
  *  注册对象 自定义工厂
@@ -119,7 +119,7 @@
  *  @param classKey                  键值
  *  @param createInstanceImmediately 是否立即创建
  */
--(void) registerInstance:(Class) className factory:(id(^)(Class className))factory
+-(void) registerInstance:(Class) className factory:(id(^)(NSString *className, NSArray *args))factory
                      key:(NSString*)classKey createInstanceImmediately:(BOOL)createInstanceImmediately;
 /**
  *  重置
@@ -148,4 +148,5 @@
  *  @param classKey  键值
  */
 -(void) unRegisterInstance:(Class) className key:(NSString*)classKey;
+
 @end
