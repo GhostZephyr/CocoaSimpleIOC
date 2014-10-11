@@ -22,8 +22,7 @@ typedef id (^makeInstance)(NSString* className, NSArray *args);
 @property(nonatomic) NSMutableDictionary* instancesRegistry; //Dictionary<Type,Dictionary<string,object>>
 @property(nonatomic) NSMutableDictionary* interfaceToClassMap; //Dictionary<Type,Type>
 @property(nonatomic) NSObject* syncLock;
--(id) makeInstance:(NSString*)tClass arguments:(NSArray*)args;
--(void) makeInstanceWithInitializer:(NSString*)tClass args:(NSArray*) args;
+-(NSObject*) makeInstance:(NSString*)tClass arguments:(NSArray*)args;
 -(void) doRegister:(NSString*)className classType:(NSString*)type factory:(makeInstance)factory classKey:(NSString*)key;
 -(id) doGetService:(NSString*)serviceType key:(NSString*)key arguments:(NSArray*)args;
 @end
@@ -107,7 +106,7 @@ typedef id (^makeInstance)(NSString* className, NSArray *args);
             self.constructorInfos[classType] = @"";
         }
         makeInstance factory = ^(NSString *name,NSArray *args) {
-           return [self makeInstance:name arguments:args];
+            return [self makeInstance:name arguments:args];
         };
         [self doRegister:nil classType:interfaceType factory:factory classKey:self.defaultKey];
         if(createInstanceImmediately) {
@@ -131,7 +130,7 @@ typedef id (^makeInstance)(NSString* className, NSArray *args);
         if([self.interfaceToClassMap objectForKey:classType] == nil) {
             self.interfaceToClassMap[classType] = @"";
         }
-    
+        
         makeInstance factory = ^(NSString *name, NSArray *args) {
             return [self makeInstance:name arguments:args];
         };
@@ -166,7 +165,7 @@ typedef id (^makeInstance)(NSString* className, NSArray *args);
         makeInstance factory = ^(NSString *name, NSArray *args) {
             return [self makeInstance:name arguments:args];
         };
-
+        
         
         [self doRegister:classType classType:classType factory:factory classKey:classKey];
         
@@ -301,7 +300,7 @@ typedef id (^makeInstance)(NSString* className, NSArray *args);
                     }
                 }
             }
-
+            
         }
     }
 }
@@ -316,7 +315,7 @@ typedef id (^makeInstance)(NSString* className, NSArray *args);
         NSMutableDictionary *instances;
         if([self.instancesRegistry objectForKey:serviceType] == nil) {
             if([self.interfaceToClassMap objectForKey:serviceType] == nil) {
-                 [NSException raise:@"ActivationException" format:@"Type not found in cache: %@",serviceType];
+                [NSException raise:@"ActivationException" format:@"Type not found in cache: %@",serviceType];
             }
             instances = [[NSMutableDictionary alloc] init];
             [self.instancesRegistry setObject:instances forKey:serviceType];
@@ -368,7 +367,7 @@ typedef id (^makeInstance)(NSString* className, NSArray *args);
     }
 }
 
--(id) makeInstance:(NSString*)tClass arguments:(NSArray*)args {
+-(NSObject*) makeInstance:(NSString*)tClass arguments:(NSArray*)args {
     Class t = NSClassFromString(tClass);
     id instance = [t alloc];
     if(![t conformsToProtocol:@protocol(IConstructorProvider)])
@@ -391,12 +390,11 @@ typedef id (^makeInstance)(NSString* className, NSArray *args);
         SEL initializerSelector = NSSelectorFromString(ctorInfo.initializerSelectorString);
         NSMethodSignature *signature = [t methodSignatureForSelector:initializerSelector];
         BOOL isClassMethod = signature != nil && initializerSelector != @selector(init);
-    
+        
         if(!isClassMethod) {
-            instance = [t alloc];
             signature = [t instanceMethodSignatureForSelector:initializerSelector];
         }
-    
+        
         if(signature) {
             NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
             [invocation setTarget:isClassMethod ? t : instance];
@@ -436,7 +434,7 @@ typedef id (^makeInstance)(NSString* className, NSArray *args);
         [invocation invokeWithTarget:instance];
     }
     
-
+    
     return instance;
 }
 
