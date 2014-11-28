@@ -20,7 +20,16 @@
 		0B08BA6E19D4151F00D3391B /* SampleUIViewControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B08BA6D19D4151F00D3391B /* SampleUIViewControl.m */; };
 		0B08BA7219D417C500D3391B /* ViewModelLocator.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B08BA7119D417C500D3391B /* ViewModelLocator.m */; };
 		0B08BA7519D419D500D3391B /* TestServiceC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B08BA7419D419D500D3391B /* TestServiceC.m */; };
-		0B4633DD19E775BB00BEFA34 /* libSimpleIoc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BB8EC3519CFB3D300248083 /* libSimpleIoc.a */; };
+		0B08BA7619D41B0000D3391B /* libSimpleIoc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BB8EC3519CFB3D300248083 /* libSimpleIoc.a */; };
+		0BA2260419D7EA6800316E63 /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BA2260319D7EA6800316E63 /* TestViewController.m */; };
+		0BA2260819D8148500316E63 /* SimpleIoc.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BB8EC8D19CFC23B00248083 /* SimpleIoc.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		0BA2260919D8148C00316E63 /* ConstructorInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BB8EC8519CFC23B00248083 /* ConstructorInfo.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		0BA2260A19D8148F00316E63 /* IConstructorProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BB8EC8919CFC23B00248083 /* IConstructorProvider.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		0BA2260D19D8160C00316E63 /* ISimpleIoc.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BB8EC8C19CFC23B00248083 /* ISimpleIoc.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		0BA2260E19D8161900316E63 /* IServiceLocator.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BB8EC8A19CFC23B00248083 /* IServiceLocator.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		0BA2260F19D8161B00316E63 /* IServiceProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BB8EC8B19CFC23B00248083 /* IServiceProvider.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		0BB89EDA1A19E36900EDD1C5 /* SimpleIocLibrary.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BB89ED81A19E36900EDD1C5 /* SimpleIocLibrary.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		0BB89EDB1A19E36900EDD1C5 /* SimpleIocLibrary.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BB89ED91A19E36900EDD1C5 /* SimpleIocLibrary.m */; };
 		0BB8EC6119CFC1BD00248083 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BB8EC6019CFC1BD00248083 /* Foundation.framework */; };
 		0BB8EC8F19CFC23B00248083 /* ConstructorInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BB8EC8619CFC23B00248083 /* ConstructorInfo.m */; };
 		0BB8EC9119CFC23B00248083 /* SimpleIoc.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BB8EC8E19CFC23B00248083 /* SimpleIoc.m */; };
@@ -35,18 +44,6 @@
 			remoteInfo = SimpleIoc;
 		};
 /* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		0BB8EC3319CFB3D300248083 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "include/$(PRODUCT_NAME)";
-			dstSubfolderSpec = 16;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		0B08BA2D19D3BE6A00D3391B /* SimpleIocConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleIocConst.h; sourceTree = "<group>"; };
@@ -76,7 +73,10 @@
 		0B08BA7119D417C500D3391B /* ViewModelLocator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewModelLocator.m; sourceTree = "<group>"; };
 		0B08BA7319D419D500D3391B /* TestServiceC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestServiceC.h; sourceTree = "<group>"; };
 		0B08BA7419D419D500D3391B /* TestServiceC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestServiceC.m; sourceTree = "<group>"; };
-		0B907C7D19E8C9F20012A103 /* ILocator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILocator.h; sourceTree = "<group>"; };
+		0BA2260219D7EA6800316E63 /* TestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestViewController.h; sourceTree = "<group>"; };
+		0BA2260319D7EA6800316E63 /* TestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestViewController.m; sourceTree = "<group>"; };
+		0BB89ED81A19E36900EDD1C5 /* SimpleIocLibrary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleIocLibrary.h; sourceTree = "<group>"; };
+		0BB89ED91A19E36900EDD1C5 /* SimpleIocLibrary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleIocLibrary.m; sourceTree = "<group>"; };
 		0BB8EC3519CFB3D300248083 /* libSimpleIoc.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSimpleIoc.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		0BB8EC4D19CFB3EB00248083 /* App.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = App.xcconfig; sourceTree = "<group>"; };
 		0BB8EC4E19CFB3EB00248083 /* Libraries.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Libraries.xcconfig; sourceTree = "<group>"; };
@@ -100,7 +100,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0B4633DD19E775BB00BEFA34 /* libSimpleIoc.a in Frameworks */,
+				0B08BA7619D41B0000D3391B /* libSimpleIoc.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -127,6 +127,8 @@
 				0B08BA3B19D413E400D3391B /* AppDelegate.m */,
 				0B08BA3D19D413E400D3391B /* ViewController.h */,
 				0B08BA3E19D413E400D3391B /* ViewController.m */,
+				0BA2260219D7EA6800316E63 /* TestViewController.h */,
+				0BA2260319D7EA6800316E63 /* TestViewController.m */,
 				0B08BA4019D413E400D3391B /* Main.storyboard */,
 				0B08BA4319D413E400D3391B /* Images.xcassets */,
 				0B08BA4519D413E400D3391B /* LaunchScreen.xib */,
@@ -217,7 +219,8 @@
 		0BB8EC3719CFB3D300248083 /* SimpleIoc */ = {
 			isa = PBXGroup;
 			children = (
-				0B907C7D19E8C9F20012A103 /* ILocator.h */,
+				0BB89ED81A19E36900EDD1C5 /* SimpleIocLibrary.h */,
+				0BB89ED91A19E36900EDD1C5 /* SimpleIocLibrary.m */,
 				0BB8EC8519CFC23B00248083 /* ConstructorInfo.h */,
 				0BB8EC8619CFC23B00248083 /* ConstructorInfo.m */,
 				0BB8EC8919CFC23B00248083 /* IConstructorProvider.h */,
@@ -248,6 +251,23 @@
 		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		0BA2260719D8145D00316E63 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0BA2260819D8148500316E63 /* SimpleIoc.h in Headers */,
+				0BA2260F19D8161B00316E63 /* IServiceProvider.h in Headers */,
+				0BA2260E19D8161900316E63 /* IServiceLocator.h in Headers */,
+				0BB89EDA1A19E36900EDD1C5 /* SimpleIocLibrary.h in Headers */,
+				0BA2260D19D8160C00316E63 /* ISimpleIoc.h in Headers */,
+				0BA2260919D8148C00316E63 /* ConstructorInfo.h in Headers */,
+				0BA2260A19D8148F00316E63 /* IConstructorProvider.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
 		0B08BA3319D413E400D3391B /* SimpleIocTest */ = {
 			isa = PBXNativeTarget;
@@ -273,7 +293,7 @@
 			buildPhases = (
 				0BB8EC3119CFB3D300248083 /* Sources */,
 				0BB8EC3219CFB3D300248083 /* Frameworks */,
-				0BB8EC3319CFB3D300248083 /* CopyFiles */,
+				0BA2260719D8145D00316E63 /* Headers */,
 			);
 			buildRules = (
 			);
@@ -342,6 +362,7 @@
 				0B08BA3C19D413E400D3391B /* AppDelegate.m in Sources */,
 				0B08BA3919D413E400D3391B /* main.m in Sources */,
 				0B08BA6E19D4151F00D3391B /* SampleUIViewControl.m in Sources */,
+				0BA2260419D7EA6800316E63 /* TestViewController.m in Sources */,
 				0B08BA6919D4149800D3391B /* MainViewModel.m in Sources */,
 				0B08BA7519D419D500D3391B /* TestServiceC.m in Sources */,
 				0B08BA7219D417C500D3391B /* ViewModelLocator.m in Sources */,
@@ -357,6 +378,7 @@
 				0BB8EC8F19CFC23B00248083 /* ConstructorInfo.m in Sources */,
 				0BB8EC9119CFC23B00248083 /* SimpleIoc.m in Sources */,
 				0B08BA2F19D3BE6A00D3391B /* SimpleIocConst.m in Sources */,
+				0BB89EDB1A19E36900EDD1C5 /* SimpleIocLibrary.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -426,6 +448,7 @@
 		};
 		0BB8EC4419CFB3D300248083 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0BB8EC5019CFB3EB00248083 /* Project.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
@@ -466,6 +489,7 @@
 		};
 		0BB8EC4519CFB3D300248083 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0BB8EC5019CFB3EB00248083 /* Project.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
@@ -500,6 +524,7 @@
 		};
 		0BB8EC4719CFB3D300248083 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0BB8EC4F19CFB3EB00248083 /* Library.xcconfig */;
 			buildSettings = {
 				GCC_PREFIX_HEADER = "";
 				OTHER_LDFLAGS = "-ObjC";
@@ -510,7 +535,9 @@
 		};
 		0BB8EC4819CFB3D300248083 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0BB8EC4F19CFB3EB00248083 /* Library.xcconfig */;
 			buildSettings = {
+				GCC_PREFIX_HEADER = "";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;

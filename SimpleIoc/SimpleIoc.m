@@ -11,7 +11,8 @@
 #import <Foundation/Foundation.h>
 #import "ConstructorInfo.h"
 #import <objc/runtime.h>
-static SimpleIoc *_default;
+
+
 
 typedef id (^makeInstance)(NSString* className, NSArray *args);
 @interface SimpleIoc()
@@ -22,6 +23,7 @@ typedef id (^makeInstance)(NSString* className, NSArray *args);
 @property(nonatomic) NSMutableDictionary* instancesRegistry; //Dictionary<Type,Dictionary<string,object>>
 @property(nonatomic) NSMutableDictionary* interfaceToClassMap; //Dictionary<Type,Type>
 @property(nonatomic) NSObject* syncLock;
+@property(nonatomic) NSCharacterSet* disallowedCharacters;
 -(NSObject*) makeInstance:(NSString*)tClass arguments:(NSArray*)args;
 -(void) doRegister:(NSString*)className classType:(NSString*)type factory:(makeInstance)factory classKey:(NSString*)key;
 -(id) doGetService:(NSString*)serviceType key:(NSString*)key arguments:(NSArray*)args;
@@ -38,17 +40,20 @@ typedef id (^makeInstance)(NSString* className, NSArray *args);
         self.factories = [[NSMutableDictionary alloc] init];
         self.interfaceToClassMap = [[NSMutableDictionary alloc] init];
         self.instancesRegistry = [[NSMutableDictionary alloc] init];
+        self.disallowedCharacters = [[NSCharacterSet
+                                                 characterSetWithCharactersInString:@"QWERTYUIOPLKJHGFDSAZXCVBNMqwertyuioplkjhgfdsazxcvbnm"] invertedSet];
+
     }
     return self;
 }
 
 +(instancetype)defaultInstance {
-    if(_default == nil) {
-        _default = [[SimpleIoc alloc] init];
-        return _default;
-    } else {
-        return _default;
-    }
+    static dispatch_once_t pred;
+    __strong static SimpleIoc *_default = nil;
+    dispatch_once(&pred, ^{
+        _default = [[self alloc]init];
+    });
+    return _default;
 }
 
 //////////////////// 实现ISimpleIoc ////////////////////
@@ -93,6 +98,10 @@ typedef id (^makeInstance)(NSString* className, NSArray *args);
 }
 
 -(void) registerInstance:(Protocol*) interfaceName tClassName:(Class) className createInstanceImmediately:(BOOL)createInstanceImmediately {
+    [self registerInstance:interfaceName tClassName:className createInstanceImmediately:createInstanceImmediately key:self.defaultKey];
+}
+
+-(void)registerInstance:(Protocol *)interfaceName tClassName:(Class)className createInstanceImmediately:(BOOL)createInstanceImmediately key:(NSString *)classKey {
     @synchronized(self.syncLock) {
         NSString *classType = NSStringFromClass(className);
         NSString *interfaceType = NSStringFromProtocol(interfaceName)   ;
@@ -108,11 +117,12 @@ typedef id (^makeInstance)(NSString* className, NSArray *args);
         makeInstance factory = ^(NSString *name,NSArray *args) {
             return [self makeInstance:name arguments:args];
         };
-        [self doRegister:nil classType:interfaceType factory:factory classKey:self.defaultKey];
+        [self doRegister:nil classType:interfaceType factory:factory classKey:classKey];
         if(createInstanceImmediately) {
             [self getInstanceByProtocol:interfaceName];
         }
     }
+
 }
 
 -(void) registerInstance:(Class) className {
@@ -130,7 +140,7 @@ typedef id (^makeInstance)(NSString* className, NSArray *args);
         if([self.interfaceToClassMap objectForKey:classType] == nil) {
             self.interfaceToClassMap[classType] = @"";
         }
-        
+    
         makeInstance factory = ^(NSString *name, NSArray *args) {
             return [self makeInstance:name arguments:args];
         };
@@ -165,7 +175,7 @@ typedef id (^makeInstance)(NSString* className, NSArray *args);
         makeInstance factory = ^(NSString *name, NSArray *args) {
             return [self makeInstance:name arguments:args];
         };
-        
+
         
         [self doRegister:classType classType:classType factory:factory classKey:classKey];
         
@@ -229,9 +239,9 @@ typedef id (^makeInstance)(NSString* className, NSArray *args);
 }
 
 
--(void) unRegisterInstance:(Class) className {
+-(void) unRegisterInstance:(NSString*) className {
     @synchronized(self.syncLock) {
-        NSString *serviceType = NSStringFromClass(className);
+        NSString *serviceType = className;
         NSString *resolveTo;
         if([self.interfaceToClassMap objectForKey:serviceType]) {
             resolveTo = self.interfaceToClassMap[serviceType];
@@ -257,15 +267,15 @@ typedef id (^makeInstance)(NSString* className, NSArray *args);
     }
 }
 
--(void) unRegisterInstance:(Class) className instance:(id)instance {
+-(void) unRegisterInstance:(NSString*) className instance:(id)instance {
     @synchronized(self.syncLock) {
-        NSString *classType = NSStringFromClass(className);
+        NSString *classType = className;
         if([self.instancesRegistry objectForKey:classType]) {
             NSMutableDictionary *list = self.instancesRegistry[classType];
             NSArray *keyEnumerator = list.allKeys;
             for (NSInteger i = 0; i<keyEnumerator.count; i++) {
                 NSObject *value;
-                NSObject *key;
+                NSString *key;
                 key = keyEnumerator[i];
                 value = list[key];
                 if([value isEqual:instance]) {
@@ -273,32 +283,42 @@ typedef id (^makeInstance)(NSString* className, NSArray *args);
                 }
                 if([self.factories objectForKey:classType]) {
                     if([self.factories[classType] objectForKey:key]) {
+                        NSObject *releaseInstance = self.factories[classType][key];
                         [self.factories[classType] removeObjectForKey:key];
+                        releaseInstance = nil;
                     }
                 }
+                
+            }
+            if([self.factories objectForKey:classType]) {
+                [self.factories removeObjectForKey:classType];
             }
         }
+        instance = nil;
     }
 }
 
--(void) unRegisterInstance:(Class) className key:(Class)classKey {
+-(void) unRegisterInstance:(NSString*) className key:(NSString*)classKey {
     @synchronized(self.syncLock) {
-        NSString *classType = NSStringFromClass(className);
+        NSString *classType = className;
         if([self.instancesRegistry objectForKey:classType]) {
             NSMutableDictionary *list = self.instancesRegistry[classType];
             NSArray *keyEnumerator = list.allKeys;
             for (NSInteger i = 0; i<keyEnumerator.count; i++) {
+                NSString *key;
                 NSObject *value;
-                NSObject *key;
                 key = keyEnumerator[i];
-                if([value isEqual:classKey]) {
+                value = list[key];
+                if([key isEqual:classKey]) {
                     [list removeObjectForKey:key];
+                    value = nil;
                 }
-                if([self.factories objectForKey:classType]) {
-                    if([self.factories[classType] objectForKey:key]) {
-                        [self.factories[classType] removeObjectForKey:key];
-                    }
+            }
+            if([self.factories objectForKey:classType]) {
+                if([self.factories[classType] objectForKey:classKey]) {
+                    [self.factories[classType] removeObjectForKey:classKey];
                 }
+                [self.factories removeObjectForKey:classType];
             }
             
         }
@@ -307,7 +327,7 @@ typedef id (^makeInstance)(NSString* className, NSArray *args);
 
 -(id)doGetService:(NSString*)serviceType key:(NSString *)key arguments:(NSArray *)args{
     @synchronized(self.syncLock) {
-        NSLog(@"ServiceType %@",serviceType);
+//        NSLog(@"ServiceType %@",serviceType);
         if(key == nil || [key isEqualToString:@""]) {
             key = self.defaultKey;
         }
@@ -315,7 +335,7 @@ typedef id (^makeInstance)(NSString* className, NSArray *args);
         NSMutableDictionary *instances;
         if([self.instancesRegistry objectForKey:serviceType] == nil) {
             if([self.interfaceToClassMap objectForKey:serviceType] == nil) {
-                [NSException raise:@"ActivationException" format:@"Type not found in cache: %@",serviceType];
+                 [NSException raise:@"ActivationException" format:@"Type not found in cache: %@",serviceType];
             }
             instances = [[NSMutableDictionary alloc] init];
             [self.instancesRegistry setObject:instances forKey:serviceType];
@@ -324,6 +344,7 @@ typedef id (^makeInstance)(NSString* className, NSArray *args);
         }
         
         if([instances objectForKey:key]) {
+//            NSLog(@"已经包含 Type:%@ key:%@",serviceType,key);
             return instances[key];
         }
         
@@ -390,11 +411,11 @@ typedef id (^makeInstance)(NSString* className, NSArray *args);
         SEL initializerSelector = NSSelectorFromString(ctorInfo.initializerSelectorString);
         NSMethodSignature *signature = [t methodSignatureForSelector:initializerSelector];
         BOOL isClassMethod = signature != nil && initializerSelector != @selector(init);
-        
+    
         if(!isClassMethod) {
             signature = [t instanceMethodSignatureForSelector:initializerSelector];
         }
-        
+    
         if(signature) {
             NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
             [invocation setTarget:isClassMethod ? t : instance];
@@ -411,10 +432,13 @@ typedef id (^makeInstance)(NSString* className, NSArray *args);
     
     NSMutableArray *parameters = [[NSMutableArray alloc] init];
     for (int i = 0; i < ctorInfo.parameterTypes.count; i++) {
-        Protocol *p = ctorInfo.parameterTypes[i];
-        NSString *serviceType = NSStringFromProtocol(p);
-        if(serviceType == nil) {
+        Class ctorClass = ctorInfo.parameterTypes[i];
+        NSString *serviceType;
+        BOOL isClass = [ctorClass.description hasPrefix:@"<Protocol"] ? NO : YES;
+        if(isClass) {
             serviceType = NSStringFromClass(ctorInfo.parameterTypes[i]);
+        } else {
+            serviceType = NSStringFromProtocol(ctorInfo.parameterTypes[i]);
         }
         [parameters addObject:[self getSerivce:serviceType]];
     }
@@ -434,10 +458,57 @@ typedef id (^makeInstance)(NSString* className, NSArray *args);
         [invocation invokeWithTarget:instance];
     }
     
-    
+
     return instance;
 }
 
+-(void)simpleIocRequiresInjection:(id)instance {
+    Class t  = [instance class];
+    NSString *tClass = NSStringFromClass(t);
+    if(![t conformsToProtocol:@protocol(IConstructorProvider)])
+    {
+        return;
+    }
+    id<IConstructorProvider> ctorInstance = instance;
+    ConstructorInfo *ctorInfo = nil;
+    if([self.constructorInfos objectForKey:tClass]) {
+        ctorInfo = self.constructorInfos[tClass];
+    }
+    
+    if([ctorInfo isEqual:@""] || ctorInfo == nil) {
+        ctorInfo = [ctorInstance getConstructorInfo];
+        self.constructorInfos[tClass] = ctorInfo;
+    }
+    SEL buildSelector = NSSelectorFromString(ctorInfo.buildSelectorString);
+    NSMutableArray *parameters = [[NSMutableArray alloc] init];
+    for (int i = 0; i < ctorInfo.parameterTypes.count; i++) {
+        Class ctorClass = ctorInfo.parameterTypes[i];
+        NSString *serviceType;
+        BOOL isClass = [ctorClass.description hasPrefix:@"<Protocol"] ? NO : YES;
+        if(isClass) {
+            serviceType = NSStringFromClass(ctorInfo.parameterTypes[i]);
+        } else {
+            serviceType = NSStringFromProtocol(ctorInfo.parameterTypes[i]);
+        }
+        [parameters addObject:[self getSerivce:serviceType]];
+    }
+    __unsafe_unretained id argsArray[parameters.count];
+    [parameters getObjects:argsArray];
+    
+    if ([instance respondsToSelector:buildSelector])
+    {
+        NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[instance methodSignatureForSelector:buildSelector]];
+        
+        for (int i = 0; i < parameters.count; i++)
+        {
+            [invocation setArgument:&argsArray[i] atIndex:i + 2];
+        }
+        
+        [invocation setSelector:buildSelector];
+        [invocation invokeWithTarget:instance];
+    }
+
+}
 //end
 
 //////////////////// 实现IServiceProvider ////////////////////
@@ -501,4 +572,7 @@ typedef id (^makeInstance)(NSString* className, NSArray *args);
 //end
 
 
+-(id)getInstances {
+    return nil;
+}
 @end

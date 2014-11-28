@@ -63,6 +63,16 @@
 -(void) registerInstance:(Protocol*) interfaceName tClassName:(Class) className createInstanceImmediately:(BOOL)createInstanceImmediately;
 
 /**
+ *  注册接口的实现类 使用key区分
+ *
+ *  @param interfaceName             接口类型
+ *  @param className                 实现类类型
+ *  @param createInstanceImmediately 是否立即生成
+ *  @param classKey                  唯一键值
+ */
+-(void) registerInstance:(Protocol*) interfaceName tClassName:(Class) className createInstanceImmediately:(BOOL)createInstanceImmediately key:(NSString*)classKey;
+
+/**
  *  注册对象
  *
  *  @param className 对象类型
@@ -131,7 +141,7 @@
  *
  *  @param className 对象类型
  */
--(void) unRegisterInstance:(Class) className;
+-(void) unRegisterInstance:(NSString*) className;
 
 /**
  *  注销对象
@@ -139,7 +149,7 @@
  *  @param className 对象类型
  *  @param instance  对象实例
  */
--(void) unRegisterInstance:(Class) className instance:(id)instance;
+-(void) unRegisterInstance:(NSString*) className instance:(id)instance;
 
 /**
  *  注销对象
@@ -147,6 +157,12 @@
  *  @param className 对象类型
  *  @param classKey  键值
  */
--(void) unRegisterInstance:(Class) className key:(NSString*)classKey;
+-(void) unRegisterInstance:(NSString*) className key:(NSString*)classKey;
 
+/**
+ *  获取注入信息(可以在非工厂注册的实例中使用 并获取需要注入的信息)
+ *
+ *  @param instance 非工厂构造的实例
+ */
+-(void) simpleIocRequiresInjection:(id)instance;
 @end
