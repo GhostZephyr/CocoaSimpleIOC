@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "ViewModelLocator.h"
+#import "VideoPlayerLocator.h"
 
 @interface AppDelegate ()
 @property ViewModelLocator *locator;

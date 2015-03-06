@@ -10,5 +10,5 @@
 #import "IConstructorProvider.h"
 
 @interface MainViewModel : NSObject<IConstructorProvider>
-
+-(void) isOK;
 @end
