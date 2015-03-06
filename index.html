@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Simpleioc-for-objective-c : Simple Ioc for Objective-c  from MvvmLight">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Simpleioc-for-objective-c</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/wangrenzhu/SimpleIoc-For-Objective-c">View on GitHub</a>
+
+          <h1 id="project_title">Simpleioc-for-objective-c</h1>
+          <h2 id="project_tagline">Simple Ioc for Objective-c  from MvvmLight</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/wangrenzhu/SimpleIoc-For-Objective-c/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/wangrenzhu/SimpleIoc-For-Objective-c/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <p><strong>Simple Ioc for Objective-c  from MvvmLight</strong></p>
+
+<p>这是一款移植的Ioc 框架  他诞生于 Microsoft 的MvvmLight 你可以在wiki 中获得mvvm设计模式的相关说明</p>
+
+<p>结合了Objective-c的特性实现了原有框架的功能 并提供了更多的使用方式
+使用SimpleIoc能使开发与维护变的更简单，降低模块之间的藕合度</p>
+
+<p>*<strong><em>你可以在 Locator 中管理 接口于实现 并将模块零件化</em></strong>*</p>
+
+<p>[[SimpleIoc defaultInstance] registerInstance:[SampleUIViewControl class]];
+[SimpleIoc defaultInstance] registerInstance:[MainViewModel class]];
+[SimpleIoc defaultInstance] registerInstance:[MainViewModel class] createInstanceImmediately:NO key:@"OtherMainView"];
+[SimpleIoc defaultInstance] registerInstance:<a href="https://github.com/protocol" class="user-mention">@protocol</a>(ITestServiceA) tClassName:[TestServiceA class]];
+[SimpleIoc defaultInstance] registerInstance:<a href="https://github.com/protocol" class="user-mention">@protocol</a>(ITestServiceB) tClassName:[TestServiceB class]];
+[SimpleIoc defaultInstance] registerInstance:<a href="https://github.com/protocol" class="user-mention">@protocol</a>(ITestServiceC) tClassName:[TestServiceC class]];</p>
+
+<p><strong>从SimpleIoc 中获取构造你想要的模块</strong>
+MainViewModel *viewModel = [[SimpleIoc defaultInstance] getInstanceWithArguments:[MainViewModel class] arguments:arguments];</p>
+
+<p><strong>SimpleIoc 会逐一构造你想要的零件 并注入到你想要的地方</strong>
+<a href="https://github.com/interface" class="user-mention">@interface</a> MainViewModel()
+<a href="https://github.com/property" class="user-mention">@property</a> id a;
+<a href="https://github.com/property" class="user-mention">@property</a> NSString* myKey;
+<a href="https://github.com/end" class="user-mention">@end</a>
+<a href="https://github.com/implementation" class="user-mention">@implementation</a> MainViewModel</p>
+
+<p>simpleIoc_ctorInfoWithSelectorCustomInit(<a href="https://github.com/selector" class="user-mention">@selector</a>(build:testB:), <a href="https://github.com/selector" class="user-mention">@selector</a>(init:), <a href="https://github.com/protocol" class="user-mention">@protocol</a>(ITestServiceA))</p>
+
+<p>-(void) build:(id) a testB:(id)b {
+    self.a = a;
+}
+<a href="https://github.com/end" class="user-mention">@end</a></p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Simpleioc-for-objective-c maintained by <a href="https://github.com/wangrenzhu">wangrenzhu</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
