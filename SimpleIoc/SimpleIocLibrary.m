@@ -24,7 +24,7 @@
 //version and log Begin
 + (NSString *)libVersion
 {
-    return @"2.1.0";
+    return @"2.3.0";
 }
 
 + (void)openLog:(BOOL)openLog
@@ -43,6 +43,9 @@
     [[SimpleIocLibrary defaultInstance] setOpenLog:openLog];
 }
 
+-(NSString *)description {
+    return @"Ioc控制反转模块";
+}
 //version and log End
 
 

@@ -21,6 +21,7 @@
 		0B08BA7219D417C500D3391B /* ViewModelLocator.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B08BA7119D417C500D3391B /* ViewModelLocator.m */; };
 		0B08BA7519D419D500D3391B /* TestServiceC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B08BA7419D419D500D3391B /* TestServiceC.m */; };
 		0B08BA7619D41B0000D3391B /* libSimpleIoc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BB8EC3519CFB3D300248083 /* libSimpleIoc.a */; };
+		0B5488F91AA980BD003D4C1F /* ILocator.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B5488F81AA980BC003D4C1F /* ILocator.h */; };
 		0BA2260419D7EA6800316E63 /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BA2260319D7EA6800316E63 /* TestViewController.m */; };
 		0BA2260819D8148500316E63 /* SimpleIoc.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BB8EC8D19CFC23B00248083 /* SimpleIoc.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		0BA2260919D8148C00316E63 /* ConstructorInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BB8EC8519CFC23B00248083 /* ConstructorInfo.h */; settings = {ATTRIBUTES = (Private, ); }; };
@@ -73,6 +74,7 @@
 		0B08BA7119D417C500D3391B /* ViewModelLocator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewModelLocator.m; sourceTree = "<group>"; };
 		0B08BA7319D419D500D3391B /* TestServiceC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestServiceC.h; sourceTree = "<group>"; };
 		0B08BA7419D419D500D3391B /* TestServiceC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestServiceC.m; sourceTree = "<group>"; };
+		0B5488F81AA980BC003D4C1F /* ILocator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILocator.h; sourceTree = "<group>"; };
 		0BA2260219D7EA6800316E63 /* TestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestViewController.h; sourceTree = "<group>"; };
 		0BA2260319D7EA6800316E63 /* TestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestViewController.m; sourceTree = "<group>"; };
 		0BB89ED81A19E36900EDD1C5 /* SimpleIocLibrary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleIocLibrary.h; sourceTree = "<group>"; };
@@ -219,6 +221,7 @@
 		0BB8EC3719CFB3D300248083 /* SimpleIoc */ = {
 			isa = PBXGroup;
 			children = (
+				0B5488F81AA980BC003D4C1F /* ILocator.h */,
 				0BB89ED81A19E36900EDD1C5 /* SimpleIocLibrary.h */,
 				0BB89ED91A19E36900EDD1C5 /* SimpleIocLibrary.m */,
 				0BB8EC8519CFC23B00248083 /* ConstructorInfo.h */,
@@ -261,6 +264,7 @@
 				0BA2260E19D8161900316E63 /* IServiceLocator.h in Headers */,
 				0BB89EDA1A19E36900EDD1C5 /* SimpleIocLibrary.h in Headers */,
 				0BA2260D19D8160C00316E63 /* ISimpleIoc.h in Headers */,
+				0B5488F91AA980BD003D4C1F /* ILocator.h in Headers */,
 				0BA2260919D8148C00316E63 /* ConstructorInfo.h in Headers */,
 				0BA2260A19D8148F00316E63 /* IConstructorProvider.h in Headers */,
 			);
