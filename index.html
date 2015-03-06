@@ -3,50 +3,35 @@
   <head>
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="viewport" content="width=640">
-
-    <link rel="stylesheet" href="stylesheets/core.css" media="screen">
-    <link rel="stylesheet" href="stylesheets/mobile.css" media="handheld, only screen and (max-device-width:640px)">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-
-    <script type="text/javascript" src="javascripts/modernizr.js"></script>
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script type="text/javascript" src="javascripts/headsmart.min.js"></script>
-    <script type="text/javascript">
-      $(document).ready(function () {
-        $('#main_content').headsmart()
-      })
-    </script>
+    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
     <title>Simpleioc-for-objective-c by wangrenzhu</title>
   </head>
 
   <body>
-    <a id="forkme_banner" href="https://github.com/wangrenzhu/SimpleIoc-For-Objective-c">View on GitHub</a>
-    <div class="shell">
+    <div id="container">
+      <div class="inner">
 
-      <header>
-        <span class="ribbon-outer">
-          <span class="ribbon-inner">
-            <h1>Simpleioc-for-objective-c</h1>
-            <h2>Simple Ioc for Objective-c  from MvvmLight</h2>
-          </span>
-          <span class="left-tail"></span>
-          <span class="right-tail"></span>
-        </span>
-      </header>
+        <header>
+          <h1>Simpleioc-for-objective-c</h1>
+          <h2>Simple Ioc for Objective-c  from MvvmLight</h2>
+        </header>
 
-      <section id="downloads">
-        <span class="inner">
-          <a href="https://github.com/wangrenzhu/SimpleIoc-For-Objective-c/zipball/master" class="zip"><em>download</em> .ZIP</a><a href="https://github.com/wangrenzhu/SimpleIoc-For-Objective-c/tarball/master" class="tgz"><em>download</em> .TGZ</a>
-        </span>
-      </section>
+        <section id="downloads" class="clearfix">
+          <a href="https://github.com/wangrenzhu/SimpleIoc-For-Objective-c/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/wangrenzhu/SimpleIoc-For-Objective-c/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/wangrenzhu/SimpleIoc-For-Objective-c" id="view-on-github" class="button"><span>View on GitHub</span></a>
+        </section>
 
+        <hr>
 
-      <span class="banner-fix"></span>
-
-
-      <section id="main_content">
-        <p><strong>Simple Ioc for Objective-c  from MvvmLight</strong></p>
+        <section id="main_content">
+          <p><strong>Simple Ioc for Objective-c  from MvvmLight</strong></p>
 
 <p>这是一款移植的Ioc 框架  他诞生于 Microsoft 的MvvmLight 你可以在wiki 中获得mvvm设计模式的相关说明</p>
 
@@ -62,11 +47,13 @@
 [SimpleIoc defaultInstance] registerInstance:<a href="https://github.com/protocol" class="user-mention">@protocol</a>(ITestServiceB) tClassName:[TestServiceB class]];
 [SimpleIoc defaultInstance] registerInstance:<a href="https://github.com/protocol" class="user-mention">@protocol</a>(ITestServiceC) tClassName:[TestServiceC class]];</p>
 
-<p><strong>从SimpleIoc 中获取构造你想要的模块</strong>
-MainViewModel *viewModel = [[SimpleIoc defaultInstance] getInstanceWithArguments:[MainViewModel class] arguments:arguments];</p>
+<p><strong>从SimpleIoc 中获取构造你想要的模块</strong></p>
 
-<p><strong>SimpleIoc 会逐一构造你想要的零件 并注入到你想要的地方</strong>
-<a href="https://github.com/interface" class="user-mention">@interface</a> MainViewModel()
+<p>MainViewModel *viewModel = [[SimpleIoc defaultInstance] getInstanceWithArguments:[MainViewModel class] arguments:arguments];</p>
+
+<p><strong>SimpleIoc 会逐一构造你想要的零件 并注入到你想要的地方</strong></p>
+
+<p><a href="https://github.com/interface" class="user-mention">@interface</a> MainViewModel()
 <a href="https://github.com/property" class="user-mention">@property</a> id a;
 <a href="https://github.com/property" class="user-mention">@property</a> NSString* myKey;
 <a href="https://github.com/end" class="user-mention">@end</a>
@@ -78,22 +65,110 @@ MainViewModel *viewModel = [[SimpleIoc defaultInstance] getInstanceWithArguments
     self.a = a;
 }
 <a href="https://github.com/end" class="user-mention">@end</a></p>
-      </section>
 
-      <footer>
-        <span class="ribbon-outer">
-          <span class="ribbon-inner">
-            <p>this project by <a href="https://github.com/wangrenzhu">wangrenzhu</a> can be found on <a href="https://github.com/wangrenzhu/SimpleIoc-For-Objective-c">GitHub</a></p>
-          </span>
-          <span class="left-tail"></span>
-          <span class="right-tail"></span>
-        </span>
-        <p>Generated with <a href="http://pages.github.com">GitHub Pages</a> using Merlot</p>
-        <span class="octocat"></span>
-      </footer>
+<p>关于MvvmLight</p>
 
+<p>Since the early days of object-oriented programming, developers have faced the issue of creating and retrieving instances of classes in applications and libraries. Various solutions have been proposed for this problem. For the past few years, dependency injection (DI)and inversion of control (IOC) have gained popularity among coders and have taken precedence over some older solutions such as the Singleton pattern.</p>
+
+<p>The Singleton pattern is a convenient way to create and expose an instance of a class, but it has a few disadvantages. For example, the code in Figure 1 shows a class exposing a property following the Singleton pattern.</p>
+
+<p>Figure 1. Singleton Pattern Implementation</p>
+
+<p>public class DataService { private static DataService _instance; public static DataService Instance { get { return _instance ?? (_instance = new DataService()); } } } Here’s a few things to note about the code in Figure 1:</p>
+
+<p>The constructor of the class is private, meaning that the only way to create the instance is by using the Instance static property. We could change that by making the constructor internal or even public. The instance is created on demand, which is generally a good thing, but sometimes we want the instance to be ready as soon as the application starts. We can do this by calling the Instance property as soon as possible. More annoying, there is no way to delete the instance, and in certain circumstances this can cause memory leaks. One way to solve this issue is to add a static Delete method to the class. Instances other than the main Instance property can be created, but each would require different accessors, either properties or methods. The Instance property does not allow any parameter to be passed to the constructor. With these improvements and a few others, we could transform this pattern into something useful and flexible. But an even cleaner approach is to remove this infrastructure code from each class we implement and instead use an external object that acts like a cache for the instances we need in various parts of our applications.</p>
+
+<p>This is where IOC containers come in handy. The term inversion of control means that the act of creating and keeping the instance is not the responsibility of the consuming class anymore, as it is in traditional object-oriented programming, but is instead delegated to an external container. While this is not an obligation, the cached instances are often injected into the consumer class’s constructor or made available through a property of the consumer. This is why we talk about dependency injection, or DI. Note that dependency injection is not necessary for IOC containers to work, but it is a convenient way to decouple the consumer from the cached instances and from the cache itself.</p>
+
+<p>For example, a classic application would be composed as shown in Figure 2. In this example, the programmer decided to provide two implementations of the service, one for run time and one for test purposes. In some cases, a developer might even want to provide a third implementation for design-time data—for example, to be used in Expression Blend or in the Visual Studio designer.</p>
+
+<p>Figure 2. Classic Composition of Consumer and Service</p>
+
+<p>public class Consumer { private IDataService _service; public Consumer() { if (App.IsTestMode) { _service = new TestDataService(); } else { _service = new DataService(); } } } public interface IDataService { Task GetData(); } public class DataService : IDataService { public async Task GetData() { // TODO Provide a runtime implementation // of the GetData method. // ... } } public class TestDataService : IDataService { public async Task GetData() { // TODO Provide a test implementation // of the GetData method. // ... } } With dependency injection, the code becomes much cleaner, as shown in Figure 3. This is the core principle of DI: another class, somewhere, is taking care of creating the correct implementation of the service, and injecting it.</p>
+
+<p>Figure 3. Dependency Injection</p>
+
+<p>public class ConsumerWithInjection { private IDataService _service; public ConsumerWithInjection(IDataService service) { _service = service; } } Of course, we need to take care of creating the service and injecting it into the consumer, and this is where the IOC container becomes useful.</p>
+
+<p>Using an IOC Container Quite a few IOC containers are available on the market. For instance, Unity (by Microsoft), StructureMap and Castle Windsor (two open source projects) are very popular .NET-based IOC containers and available for multiple platforms. In this article, I’ll use MVVM Light’s SimpleIoc to illustrate the usefulness of an IOC container in MVVM-based applications.</p>
+
+<p>Note: The sample application provided with this article shows all the techniques detailed using MVVM Light and the SimpleIoc container. The application is a simple RssReader that pulls a list of the latest articles from CNN.com and displays them. The app has two pages: MainPage shows the list of articles with their title. On click, the app navigates to a DetailsPage, which shows the article’s title, a summary, as well as a link to the main story on the CNN website. The sample package contains two implementations of the app, one for Windows 8 and the other for Windows Phone 8.</p>
+
+<p>SimpleIoc is, like the name says, a rather simple IOC container, which allows registering and getting instances from the cache in an uncomplicated manner. It also allows composing objects with dependency injection in the constructor. With SimpleIoc, you can register the IDataService, the implementing class or classes and the consumer class, as shown in Figure 4.</p>
+
+<p>Figure 4. Registering the IDataService and the Consumer</p>
+
+<p>if (App.IsTestMode) { SimpleIoc.Default.Register(); } else { SimpleIoc.Default.Register(); } SimpleIoc.Default.Register(); In clear text, the code in Figure 4 means the following: if the application is in test mode, every time anyone needs an IDataService, pass the cached instance of TestDataService; otherwise, use the cached instance of DataService. Note that the action of registering does not create any instance yet—the instantiation is on demand, and only executed when the objects are actually needed.</p>
+
+<p>The next step is to create the ConsumerWithInjection instance with code such as that shown in Figure 5.</p>
+
+<p>Figure 5. Getting the ConsumerWithInjection Instance</p>
+
+<p>public ConsumerWithInjection ConsumerInstance { get { return SimpleIoc.Default.GetInstance(); } } When the property in Figure 5 is called, the SimpleIoc container will run the following steps:</p>
+
+<p>Check whether the instance of ConsumerWithInjection is already existing in the cache. If yes, the instance is returned. If the instance doesn’t exist yet, inspect the ConsumerWithInjection’s constructor. It requires the instance of IDataService. Check whether an instance of IDataService is already available in the cache. If yes, pass it to the ConsumerWithInjection’s constructor. If not, create an instance of IDataService, cache it and pass it to the ConsumerWithInjection’s constructor. Of course, since the instance is cached, the call to the GetInstance method can be executed multiple times in various parts of the application. It is not strictly necessary to use the constructor injection shown earlier in Figure 3, although it is an elegant manner in which to compose objects and to decouple the dependencies between objects.</p>
+
+<p>The GetInstance method can also return keyed instances. This means that the IOC container can create multiple instances of the same class, keeping them indexed with a key. In that way the IOC container acts as a cache, and the instances are created on demand: when GetInstance is called with a key, the IOC container checks whether an instance of that class is already saved with that key. If it is not, the instance is created before it is returned. It is then saved in the cache for later reuse. It is also possible to get all the instances of a given class, as shown in Figure 6. The last line of that code returns an IEnumerable containing the four instances created earlier.</p>
+
+<p>Figure 6. Getting Keyed Instances, and Getting All the Instances</p>
+
+<p>// Default instance var defaultInstance = SimpleIoc.Default.GetInstance(); // Keyed instances var keyed1 = SimpleIoc.Default.GetInstance("key1"); var keyed2 = SimpleIoc.Default.GetInstance("key2"); var keyed3 = SimpleIoc.Default.GetInstance("key3"); // Get all the instances (four) var allInstances = SimpleIoc.Default.GetAllInstances(); Various Ways to Register a Class The most interesting feature of an IOC container is the way that a class can be registered in order to create the instances. Each IOC container has certain features that make it unique in the way that classes are registered. Some of them use code-only configuration, while others can read external XML files, allowing for great flexibility in the way that classes are instantiated by the container. Others allow for powerful factories to be used. Some, like MVVM Light’s SimpleIoc, are more simple and straightforward. Which IOC container to use is a decision that rests on a few criteria, such as the team’s familiarity with a specific container, the features needed for the application, and others.</p>
+
+<p>Registration can occur in a central location (often called the service locator), where important decisions can be taken, such as when to use the test implementation of all the services. Of course, it is also possible (and often necessary) to register some classes in other locations in the application.</p>
+
+<p>In some MVVM applications (and notably apps based on the MVVM Light toolkit), a class named ViewModelLocator is used to create and expose some of the application’s ViewModels. This is a convenient location in which to register most of the services and service consumers. In fact, some ViewModels can also be registered with the IOC container. In most cases, only the ViewModels that are long-lived are registered in the ViewModelLocator class. Others may be created ad hoc. In navigation apps such as Windows 8 or Windows Phone apps, these instances may be passed to a page when the navigation occurs. In some cases, SimpleIoc may be used as a cache for keyed instances in order to make this step easier, as we will see later in this article.</p>
+
+<p>To make the IOC container easier to swap with another (should the need arise), many such containers (including MVVM Light’s SimpleIoc) use the Common Service Locator implementation. This relies on a common interface (IServiceLocator) and the ServiceLocator class, which is used to abstract the IOC container’s implementation. Because SimpleIoc implements IServiceLocator, we can have the code shown in Figure 7 in our application, which executes in the same manner as the code in Figure 6. If at a later point another IOC container is selected for the application, only references to the SimpleIoc class need to be swapped. The references to ServiceLocator, on the other hand, can remain as is.</p>
+
+<p>Figure 7. Registering the ServiceLocator</p>
+
+<p>ServiceLocator.SetLocatorProvider(() =&gt; SimpleIoc.Default); // Default instance var defaultInstance = ServiceLocator.Current.GetInstance(); // Keyed instances var keyed1 = ServiceLocator.Current.GetInstance("key1"); var keyed2 = ServiceLocator.Current.GetInstance("key2"); var keyed3 = ServiceLocator.Current.GetInstance("key3"); // Get all the instances (four) var allInstances = ServiceLocator.Current.GetAllInstances(); Instead of registering a class and delegating the instance creation to the IOC container, it is also possible to register a factory expression. This delegate (usually expressed as a lambda expression) returns an instance. Because the delegate can contain any logic, it is possible to execute some complex creation code if needed, or even to return an instance that was created earlier in another part of the application. Note that the factory expression is only evaluated when needed.</p>
+
+<p>The code in Figure 8, for example, shows how to register a DataItem that accepts a DateTime as a constructor parameter. Because the constructor is only executed when GetInstance is called (and not when Register is called), the parameter will accurately show the time at which the factory code was called the first time. Subsequent calls to GetInstance will, however, show the same time, because the instance was already created and cached.</p>
+
+<p>Figure 8. Registering a Factory</p>
+
+<p>public async void InitiateRegistration() { // Registering at 0:00:00 SimpleIoc.Default.Register(() =&gt; new DataItem(DateTime.Now)); Debug.WriteLine("Registering at " + DateTime.Now); await Task.Delay(5000); // Getting at 0:00:05 var item = ServiceLocator.Current.GetInstance(); Debug.WriteLine("Creating at " + item.CreationTime); await Task.Delay(5000); // Getting at 0:00:10. Creation time is still the same item = ServiceLocator.Current.GetInstance(); Debug.WriteLine("Still the same creation time: " + item.CreationTime); } MVVM Light’s ViewModelLocator When MVVM Light is installed (using the MSI at <a href="http://mvvmlight.codeplex.com/">http://mvvmlight.codeplex.com/</a>, under the Download section), a new application can be created in Visual Studio using the project templates provided. For instance, the following steps create a new Windows 8 (WinRT) app:</p>
+
+<p>Install MVVM Light. Using the Readme file that automatically opens in your favorite browser, install the VSIX file, which makes the project templates available in Visual Studio.. Start (or restart) Visual Studio 2012. Select File, New Project. Under Visual C#, Windows Store, select the MvvmLight (Win8) project template, enter a name and location for the project and click OK. Note that MVVM Light supports all XAML-based frameworks (Windows Presentation Foundation, Silverlight, Windows Phone, Windows 8), so the same experience can be reproduced with any of these frameworks. Once the project is created, open the file ViewModelLocator.cs in the ViewModel folder. Notice the code reproduced in Figure 9.</p>
+
+<p>Figure 9. ViewModelLocator Static Constructor</p>
+
+<p>static ViewModelLocator() { ServiceLocator.SetLocatorProvider(() =&gt; SimpleIoc.Default); if (ViewModelBase.IsInDesignModeStatic) { SimpleIoc.Default.Register(); } else { SimpleIoc.Default.Register(); } SimpleIoc.Default.Register(); } Because the MainViewModel expects an IDataService in its constructor, SimpleIoc will take care of creating and composing the service and the ViewModel on demand. A little farther along in the ViewModelLocator, the MainViewModel is exposed as a property, making it possible to data bind the MainPage’s DataContext and take advantage of the design-time service implementation (DesignDataService) or the run-time implementation (DataService). To visualize the difference, press Ctrl+F5 to run the application (in the simulator or on the local machine). The main page shows the text “Welcome to MVVM Light.” Then, in Visual Studio, right-click MainPage.xaml in Solution Explorer, and select either Open in Blend or View in Designer. The same UI is shown, this time with the text “Welcome to MVVM Light [design].”</p>
+
+<p>The difference between run-time data and design-time data in this very simple, default application is made possible by the two implementations of IDataService, and the ViewModelBase.IsInDesignModeStatic property, triggering the correct service implementation to be registered. Once the MainViewModel is resolved for the first time, the IOC container is able to create the correct service, caching it and passing it to the MainViewModel constructor and then caching that instance.</p>
+
+<p>Of course, the IOC container also supports unregistering a class. When some instances have already been created and cached, the Unregister method will remove those instances from the cache. If those instances are not referenced anywhere else in the application, they will be deleted by the garbage collector and memory will be reclaimed.</p>
+
+<p>Dealing with View Services This article already talked about services—that is, classes that provide the ViewModels with data and functionality (for example, to and from a Web service). Sometimes, however, the ViewModel also needs another kind of service in order to use functionality in the View. In this case, we talk about View Services.</p>
+
+<p>Two typical View Services are the NavigationService and the DialogService. The first provides navigation functionality such as NavigateTo, GoBack, and so on. Windows Phone and Windows 8 Modern apps are almost always using a NavigationService because they are navigation applications using pages. The DialogService is very useful from a ViewModel because the developer doesn’t want to know how a message is going to be displayed to the user. The ViewModel merely provides the error message. The designer (or integrator) is in charge of displaying the message—for example, in a status bar or a custom dialog box. The DialogService typically offers functionality such as ShowStatus, ShowMessage, ShowError, and so on.</p>
+
+<p>The implementation of NavigationService differs depending on the platform being used. On Windows 8 Modern apps, for example, the NavigationService can be a self-contained class (in a utility library), using the current window’s Frame to perform the actual navigation. This is, in fact, also how each Page performs navigation, by using its built-in NavigationService property. Of course, a ViewModel is a plain object so it does not have such a built-in property, and here again the IOC container comes handy: the NavigationService is registered in the ViewModelLocator, cached in the IOC container and can be injected into each ViewModel as needed. This operation is shown in Figure 10 (taken from the reference implementation provided with this article).</p>
+
+<p>Figure 10. Creating and Registering the NavigationService, and Injecting in the MainViewModel</p>
+
+<p>public class ViewModelLocator
+ { 
+static ViewModelLocator()
+ { ServiceLocator.SetLocatorProvider(() =&gt; SimpleIoc.Default); if (ViewModelBase.IsInDesignModeStatic) { SimpleIoc.Default.Register(); } else { SimpleIoc.Default.Register(); } SimpleIoc.Default.Register(); SimpleIoc.Default.Register(); } public MainViewModel Main { get { return ServiceLocator.Current.GetInstance(); } } } public class MainViewModel : ViewModelBase { private readonly IRssService _rssService; private readonly INavigationService _navigationService; public ObservableCollection Items { get; private set; } public MainViewModel( IRssService rssService, INavigationService navigationService) { _rssService = rssService; _navigationService = navigationService; Items = new ObservableCollection(); } // ... } Wrapping Up This article is part of a series about MVVM in Windows 8 and MVVM Light. The next article will describe some of the challenges of a decoupled architecture, such as triggering navigation between pages, displaying dialog boxes to users and working with animations. In that article, I’ll cover solutions that involve MVVM Light’s Messenger component and the use of View Services.</p>
+
+<p>References The MVVM Light Toolkit is available at <a href="http://mvvmlight.codeplex.com">http://mvvmlight.codeplex.com</a></p>
+
+<p>Other Libraries:</p>
+
+<p>Laurent Bugnion is senior director for IdentityMine Inc., a Microsoft partner working with technologies such as Windows Presentation Foundation, Silverlight, Surface, Windows 8, Windows Phone and UX. He’s based in Zurich, Switzerland.</p>
+
+<p>Thanks to the following technical experts for reviewing this article: Karl Erickson has been involved in XAML developer education for the past six years, working with WPF, Silverlight, Windows Phone and Windows 8. His most recent project is the Reversi XAML/C# sample board game app.</p>
+        </section>
+
+        <footer>
+          Simpleioc-for-objective-c is maintained by <a href="https://github.com/wangrenzhu">wangrenzhu</a><br>
+          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
+        </footer>
+
+        
+      </div>
     </div>
-
-    
   </body>
 </html>
