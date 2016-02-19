@@ -9,8 +9,11 @@ Simple Ioc for Objective-c  from MvvmLight
 
 
 [[SimpleIoc defaultInstance] registerInstance:[SampleUIViewControl class]];
+
 [[SimpleIoc defaultInstance] registerInstance:[MainViewModel class]];
+
 [[SimpleIoc defaultInstance] registerInstance:[MainViewModel class] createInstanceImmediately:NO key:@"OtherMainView"];
+
 
 
 
@@ -24,8 +27,11 @@ Simple Ioc for Objective-c  from MvvmLight
 
 
 [[SimpleIoc defaultInstance] registerInstance:@protocol(ITestServiceA) tClassName:[TestServiceA class]];
+
 [[SimpleIoc defaultInstance] registerInstance:@protocol(ITestServiceB) tClassName:[TestServiceB class]];
+
 [[SimpleIoc defaultInstance] registerInstance:@protocol(ITestServiceC) tClassName:[TestServiceC class]];
+
 
 
 
