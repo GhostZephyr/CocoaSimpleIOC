@@ -15,7 +15,17 @@
 @property(nonatomic,copy) NSMutableArray *parameterTypes;
 
 /**
- *  buildMethod Selector String
+ *  储存自定义注入Selector
  */
 @property(nonatomic,copy) NSString* buildSelectorString;
+
+/**
+ *  储存自定义构造Selector
+ */
+@property(nonatomic,copy) NSString* initializerSelectorString;
+
+/**
+ *  储存自定义构造参数
+ */
+@property(nonatomic,copy) NSMutableArray *arguments;
 @end

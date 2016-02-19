@@ -9,3 +9,5 @@
 #import "SimpleIocConst.h"
 
 NSString *const BuildMethodName = @"build:";
+
+NSString *const InitMethodName = @"init";

@@ -10,4 +10,4 @@
 
 extern NSString *const BuildMethodName;
 
-extern NSString *const GetConstructorInfoMethodName;
+extern NSString *const InitMethodName;
