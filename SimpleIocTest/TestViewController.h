@@ -13,5 +13,7 @@
 
 
 @interface TestViewController : ViewController<IConstructorProvider>
+
 @property id<ITestServiceA> testServiceA;
+
 @end
