@@ -16,7 +16,7 @@
  *  @param className  服务类型的名字
  *  @return 对象
  */
--(id) getInstance:(Class) className;
+- (id)getInstance:(Class) className;
 
 /*
  *  根据类型与值获取对象
@@ -24,7 +24,7 @@
  *  @param classKey 类的唯一标识
  *  @return 对象
  */
--(id) getInstance:(Class) className key:(NSString*)classKey;
+- (id)getInstance:(Class) className key:(NSString*)classKey;
 
 /**
  *  根据类型获取自定义构造函数对象
@@ -34,7 +34,7 @@
  *
  *  @return 对象
  */
--(id) getInstanceWithArguments:(Class)className arguments:(NSArray*)args;
+- (id)getInstanceWithArguments:(Class)className arguments:(NSArray*)args;
 
 /**
  *  根据类型获取自定义构造函数对象
@@ -45,7 +45,7 @@
  *
  *  @return 对象
  */
--(id) getInstanceWithArguments:(Class)className arguments:(NSArray*)args key:(NSString *)classKey;
+- (id)getInstanceWithArguments:(Class)className arguments:(NSArray*)args key:(NSString *)classKey;
 
 
 /**
@@ -55,7 +55,7 @@
  *
  *  @return 对象
  */
--(id) getInstanceByProtocol:(Protocol*) protocol;
+- (id)getInstanceByProtocol:(Protocol*) protocol;
 
 /**
  *  根据协议类型获取对象
@@ -65,7 +65,7 @@
  *
  *  @return 对象
  */
--(id) getInstanceByProtocol:(Protocol*) protocol protocolKey:(NSString*)key;
+- (id)getInstanceByProtocol:(Protocol*) protocol protocolKey:(NSString*)key;
 
 /**
  *  根据协议类型获取自定义构造对象
@@ -75,7 +75,7 @@
  *
  *  @return 对象
  */
--(id) getInstanceByProtocolWithArguments:(Protocol *)protocol arguments:(NSArray*)args;
+- (id)getInstanceByProtocolWithArguments:(Protocol *)protocol arguments:(NSArray*)args;
 
 /**
  *  根据协议类型获取自定义构造对象
@@ -86,7 +86,7 @@
  *
  *  @return 对象
  */
--(id) getInstanceByProtocolWithArguments:(Protocol *)protocol arguments:(NSArray*)args protocolKey:(NSString *)key;
+- (id)getInstanceByProtocolWithArguments:(Protocol *)protocol arguments:(NSArray*)args protocolKey:(NSString *)key;
 
 
 /*

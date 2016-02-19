@@ -88,7 +88,7 @@ return ctor; \
  *
  *  @return 工厂
  */
-+(instancetype)defaultInstance;
++ (instancetype)defaultInstance;
 
 @end
 

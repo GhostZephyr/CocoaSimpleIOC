@@ -13,19 +13,21 @@
 #import <objc/runtime.h>
 #import <libkern/OSAtomic.h>
 
+typedef id (^makeInstance)(NSString *className, NSArray *args);
 
-typedef id (^makeInstance)(NSString* className, NSArray *args);
 @interface SimpleIoc()
-@property(nonatomic) NSMutableDictionary* constructorInfos;
-@property(nonatomic,copy) NSString* defaultKey;
-@property(nonatomic) NSArray* emptyArguments; //object[]
-@property(nonatomic) NSMutableDictionary* factories;// Dictionary<Type,Dictionary<string,Delegate>>
-@property(nonatomic) NSMutableDictionary* instancesRegistry; //Dictionary<Type,Dictionary<string,object>>
-@property(nonatomic) NSMutableDictionary* interfaceToClassMap; //Dictionary<Type,Type>
-@property(nonatomic) NSObject* syncLock;
--(NSObject*) makeInstance:(NSString*)tClass arguments:(NSArray*)args;
--(void) doRegister:(NSString*)className classType:(NSString*)type factory:(makeInstance)factory classKey:(NSString*)key;
--(id) doGetService:(NSString*)serviceType key:(NSString*)key arguments:(NSArray*)args;
+
+@property (nonatomic) NSMutableDictionary *constructorInfos;
+@property (nonatomic, copy) NSString *defaultKey;
+@property (nonatomic, copy) NSArray *emptyArguments; //object[]
+@property (nonatomic, strong) NSMutableDictionary *factories;// Dictionary<Type,Dictionary<string,Delegate>>
+@property (nonatomic, strong) NSMutableDictionary *instancesRegistry; //Dictionary<Type,Dictionary<string,object>>
+@property (nonatomic, strong) NSMutableDictionary *interfaceToClassMap; //Dictionary<Type,Type>
+@property (nonatomic, strong) NSObject *syncLock;
+
+- (id)makeInstance:(NSString *)tClass arguments:(NSArray*)args;
+- (void)doRegister:(NSString *)className classType:(NSString *)type factory:(makeInstance)factory classKey:(NSString *)key;
+- (id)doGetService:(NSString *)serviceType key:(NSString *)key arguments:(NSArray*)args;
 @end
 @implementation SimpleIoc {
       OSSpinLock _lock;
@@ -46,7 +48,7 @@ typedef id (^makeInstance)(NSString* className, NSArray *args);
     return self;
 }
 
-+(instancetype)defaultInstance {
++ (instancetype)defaultInstance {
     static dispatch_once_t pred;
     __strong static SimpleIoc *_default = nil;
     dispatch_once(&pred, ^{
@@ -57,11 +59,11 @@ typedef id (^makeInstance)(NSString* className, NSArray *args);
 
 //////////////////// 实现ISimpleIoc ////////////////////
 //begin
--(BOOL) containCreated:(NSString*) className {
+- (BOOL)containCreated:(NSString *) className {
     return [self containCreated:className key:nil];
 }
 
--(BOOL) containCreated:(NSString*) className key:(Class)classKey {
+- (BOOL)containCreated:(NSString *) className key:(Class)classKey {
     if([self.instancesRegistry objectForKey:className] == nil) {
         return NO;
     }
@@ -76,11 +78,11 @@ typedef id (^makeInstance)(NSString* className, NSArray *args);
     return YES;
 }
 
--(BOOL) isRegistered:(NSString*) className {
+- (BOOL)isRegistered:(NSString *) className {
     return [self isRegistered:className key:self.defaultKey];
 }
 
--(BOOL) isRegistered:(NSString*) className key:(Class)classKey {
+- (BOOL)isRegistered:(NSString *) className key:(Class)classKey {
     NSString *name = className;
     if([self.interfaceToClassMap objectForKey:name] == nil || [self.factories objectForKey:name] == nil) {
         return NO;
@@ -92,15 +94,15 @@ typedef id (^makeInstance)(NSString* className, NSArray *args);
     return YES;
 }
 
--(void) registerInstance:(Protocol*) interfaceName tClassName:(Class) className {
+- (void)registerInstance:(Protocol*) interfaceName tClassName:(Class) className {
     [self registerInstance:interfaceName tClassName:className createInstanceImmediately:NO];
 }
 
--(void) registerInstance:(Protocol*) interfaceName tClassName:(Class) className createInstanceImmediately:(BOOL)createInstanceImmediately {
+- (void)registerInstance:(Protocol*) interfaceName tClassName:(Class) className createInstanceImmediately:(BOOL)createInstanceImmediately {
     [self registerInstance:interfaceName tClassName:className createInstanceImmediately:createInstanceImmediately key:self.defaultKey];
 }
 
--(void)registerInstance:(Protocol *)interfaceName tClassName:(Class)className createInstanceImmediately:(BOOL)createInstanceImmediately key:(NSString *)classKey {
+- (void)registerInstance:(Protocol *)interfaceName tClassName:(Class)className createInstanceImmediately:(BOOL)createInstanceImmediately key:(NSString *)classKey {
     OSSpinLockLock(&_lock);
     NSString *classType = NSStringFromClass(className);
     NSString *interfaceType = NSStringFromProtocol(interfaceName)   ;
@@ -125,11 +127,11 @@ typedef id (^makeInstance)(NSString* className, NSArray *args);
     OSSpinLockUnlock(&_lock);
 }
 
--(void) registerInstance:(Class) className {
+- (void)registerInstance:(Class) className {
     [self registerInstance:className createInstanceImmediately:NO];
 }
 
--(void) registerInstance:(Class) className createInstanceImmediately:(BOOL)createInstanceImmediately {
+- (void)registerInstance:(Class) className createInstanceImmediately:(BOOL)createInstanceImmediately {
     NSString *classType = NSStringFromClass(className);
     OSSpinLockLock(&_lock);
     if([self.factories objectForKey:classType] && [self.factories[classType] objectForKey:self.defaultKey]) {
@@ -155,7 +157,7 @@ typedef id (^makeInstance)(NSString* className, NSArray *args);
     OSSpinLockUnlock(&_lock);
 }
 
--(void)registerInstance:(Class)className createInstanceImmediately:(BOOL)createInstanceImmediately key:(NSString *)classKey {
+- (void)registerInstance:(Class)className createInstanceImmediately:(BOOL)createInstanceImmediately key:(NSString *)classKey {
     NSString *classType = NSStringFromClass(className);
     OSSpinLockLock(&_lock);
     if([self.factories objectForKey:classType] && [self.factories[classType] objectForKey:classKey]) {
@@ -189,11 +191,11 @@ typedef id (^makeInstance)(NSString* className, NSArray *args);
     OSSpinLockUnlock(&_lock);
 }
 
--(void) registerInstance:(Class) className factory:(id(^)(NSString *className, NSArray *args))factory {
+- (void)registerInstance:(Class) className factory:(id(^)(NSString *className, NSArray *args))factory {
     [self registerInstance:nil factory:factory createInstanceImmediately:NO];
 }
 
--(void) registerInstance:(Class) className factory:(id(^)(NSString *className, NSArray *args))factory createInstanceImmediately:(BOOL)createInstanceImmediately {
+- (void)registerInstance:(Class) className factory:(id(^)(NSString *className, NSArray *args))factory createInstanceImmediately:(BOOL)createInstanceImmediately {
     NSString *classType = NSStringFromClass(className);
     if(!factory) {
         OSSpinLockUnlock(&_lock);
@@ -211,13 +213,13 @@ typedef id (^makeInstance)(NSString* className, NSArray *args);
     }
 }
 
--(void) registerInstance:(Class) className factory:(id(^)(NSString *className, NSArray *args))factory
-                     key:(NSString*)classKey {
+- (void)registerInstance:(Class) className factory:(id(^)(NSString *className, NSArray *args))factory
+                     key:(NSString *)classKey {
     [self registerInstance:className factory:factory key:classKey createInstanceImmediately:NO];
 }
 
--(void) registerInstance:(Class) className factory:(id(^)(NSString *className, NSArray *args))factory
-                     key:(NSString*)classKey createInstanceImmediately:(BOOL)createInstanceImmediately {
+- (void)registerInstance:(Class) className factory:(id(^)(NSString *className, NSArray *args))factory
+                     key:(NSString *)classKey createInstanceImmediately:(BOOL)createInstanceImmediately {
     OSSpinLockLock(&_lock);
     NSString *classType = NSStringFromClass(className);
     if([self.factories objectForKey:classType] && [self.factories[classType] objectForKey:classKey]) {
@@ -237,7 +239,7 @@ typedef id (^makeInstance)(NSString* className, NSArray *args);
     OSSpinLockUnlock(&_lock);
 }
 
--(void) reset {
+- (void)reset {
     [self.interfaceToClassMap removeAllObjects];
     [self.instancesRegistry removeAllObjects];
     [self.constructorInfos removeAllObjects];
@@ -245,7 +247,7 @@ typedef id (^makeInstance)(NSString* className, NSArray *args);
 }
 
 
--(void) unRegisterInstance:(NSString*) className {
+- (void)unRegisterInstance:(NSString *) className {
     OSSpinLockLock(&_lock);
     NSString *serviceType = className;
     NSString *resolveTo;
@@ -273,7 +275,7 @@ typedef id (^makeInstance)(NSString* className, NSArray *args);
     OSSpinLockUnlock(&_lock);
 }
 
--(void) unRegisterInstance:(NSString*) className instance:(id)instance {
+- (void)unRegisterInstance:(NSString *) className instance:(id)instance {
     OSSpinLockLock(&_lock);
     NSString *classType = className;
     if([self.instancesRegistry objectForKey:classType]) {
@@ -304,7 +306,7 @@ typedef id (^makeInstance)(NSString* className, NSArray *args);
     OSSpinLockUnlock(&_lock);
 }
 
--(void) unRegisterInstance:(NSString*) className key:(NSString*)classKey {
+- (void)unRegisterInstance:(NSString *) className key:(NSString *)classKey {
     OSSpinLockLock(&_lock);
     NSString *classType = className;
     if([self.instancesRegistry objectForKey:classType]) {
@@ -331,7 +333,7 @@ typedef id (^makeInstance)(NSString* className, NSArray *args);
     OSSpinLockUnlock(&_lock);
 }
 
--(id)doGetService:(NSString*)serviceType key:(NSString *)key arguments:(NSArray *)args{
+- (id)doGetService:(NSString *)serviceType key:(NSString *)key arguments:(NSArray *)args{
     if(key == nil || [key isEqualToString:@""]) {
         key = self.defaultKey;
     }
@@ -379,7 +381,7 @@ typedef id (^makeInstance)(NSString* className, NSArray *args);
 
 }
 
--(void)doRegister:(NSString *)className classType:(NSString *)type factory:(makeInstance)factory classKey:(NSString *)key {
+- (void)doRegister:(NSString *)className classType:(NSString *)type factory:(makeInstance)factory classKey:(NSString *)key {
     if([self.factories objectForKey:type]) {
         if([[self.factories objectForKey:type] objectForKey:key]) {
             return;
@@ -393,7 +395,7 @@ typedef id (^makeInstance)(NSString* className, NSArray *args);
     }
 }
 
--(NSObject*) makeInstance:(NSString*)tClass arguments:(NSArray*)args {
+- (id)makeInstance:(NSString *)tClass arguments:(NSArray*)args {
     Class t = NSClassFromString(tClass);
     id instance = [t alloc];
     SEL getConstructInfoMethod = @selector(getConstructorInfo);
@@ -401,6 +403,7 @@ typedef id (^makeInstance)(NSString* className, NSArray *args);
     {
         return [instance init];
     }
+    
     id<IConstructorProvider> ctorInstance = instance;
     ConstructorInfo *ctorInfo = nil;
     if([self.constructorInfos objectForKey:tClass]) {
@@ -469,7 +472,7 @@ typedef id (^makeInstance)(NSString* className, NSArray *args);
     return instance;
 }
 
--(void)simpleIocRequiresInjection:(id)instance {
+- (void)simpleIocRequiresInjection:(id)instance {
     Class t  = [instance class];
     SEL getConstructInfoMethod = @selector(getConstructorInfo);
     NSString *tClass = NSStringFromClass(t);
@@ -520,7 +523,7 @@ typedef id (^makeInstance)(NSString* className, NSArray *args);
 
 //////////////////// 实现IServiceProvider ////////////////////
 //begin
--(id)getSerivce:(NSString*)className {
+- (id)getSerivce:(NSString *)className {
     OSSpinLockLock(&_lock);
     id result = [self doGetService:className key:self.defaultKey arguments:nil];
     OSSpinLockUnlock(&_lock);
@@ -530,7 +533,7 @@ typedef id (^makeInstance)(NSString* className, NSArray *args);
 
 //////////////////// 实现IServiceLocator ////////////////////
 //begin
--(NSArray *)getAllInstance:(Class)className {
+- (NSArray *)getAllInstance:(Class)className {
     OSSpinLockLock(&_lock);
     NSString *serviceType = NSStringFromClass(className);
     if([self.factories objectForKey:serviceType]) {
@@ -548,35 +551,35 @@ typedef id (^makeInstance)(NSString* className, NSArray *args);
     return [[NSArray alloc] init];
 }
 
--(id)getInstance:(Class)className {
+- (id)getInstance:(Class)className {
     return [self doGetService:NSStringFromClass(className) key:self.defaultKey arguments:nil];
 }
 
--(id)getInstance:(Class)className key:(NSString *)classKey {
+- (id)getInstance:(Class)className key:(NSString *)classKey {
     return [self doGetService:NSStringFromClass(className) key:classKey arguments:nil];
 }
 
--(id)getInstanceWithArguments:(Class)className arguments:(NSArray *)args {
+- (id)getInstanceWithArguments:(Class)className arguments:(NSArray *)args {
     return [self doGetService:NSStringFromClass(className) key:self.defaultKey arguments:args];
 }
 
--(id)getInstanceWithArguments:(Class)className arguments:(NSArray *)args key:(NSString *)classKey {
+- (id)getInstanceWithArguments:(Class)className arguments:(NSArray *)args key:(NSString *)classKey {
     return [self doGetService:NSStringFromClass(className) key:classKey arguments:args];
 }
 
--(id)getInstanceByProtocolWithArguments:(Protocol *)protocol arguments:(NSArray *)args {
+- (id)getInstanceByProtocolWithArguments:(Protocol *)protocol arguments:(NSArray *)args {
     return [self doGetService:NSStringFromProtocol(protocol) key:self.defaultKey arguments:args];
 }
 
--(id)getInstanceByProtocolWithArguments:(Protocol *)protocol arguments:(NSArray *)args protocolKey:(NSString *)key {
+- (id)getInstanceByProtocolWithArguments:(Protocol *)protocol arguments:(NSArray *)args protocolKey:(NSString *)key {
     return [self doGetService:NSStringFromProtocol(protocol) key:key arguments:args];
 }
 
--(id)getInstanceByProtocol:(Protocol *)protocol {
+- (id)getInstanceByProtocol:(Protocol *)protocol {
     return [self doGetService:NSStringFromProtocol(protocol) key:self.defaultKey arguments:nil];
 }
 
--(id)getInstanceByProtocol:(Protocol *)protocol protocolKey:(id)key {
+- (id)getInstanceByProtocol:(Protocol *)protocol protocolKey:(id)key {
     return [self doGetService:NSStringFromProtocol(protocol) key:key arguments:nil];
 }
 //end

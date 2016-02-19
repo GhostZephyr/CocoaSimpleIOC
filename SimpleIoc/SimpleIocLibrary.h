@@ -16,7 +16,7 @@
  *
  *  @return 工厂
  */
-+(instancetype)defaultInstance;
++ (instancetype)defaultInstance;
 
 @property (nonatomic, assign) BOOL openLog;
 

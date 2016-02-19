@@ -9,5 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @protocol ILocator <NSObject>
+
 +(void) initLocator;
+
 @end

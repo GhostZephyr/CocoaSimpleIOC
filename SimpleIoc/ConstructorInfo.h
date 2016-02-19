@@ -12,20 +12,21 @@
 /**
  *  储存Protocol
  */
-@property(nonatomic,copy) NSMutableArray *parameterTypes;
+@property(nonatomic, copy) NSArray *parameterTypes;
 
 /**
  *  储存自定义注入Selector
  */
-@property(nonatomic,copy) NSString* buildSelectorString;
+@property(nonatomic, copy) NSString *buildSelectorString;
 
 /**
  *  储存自定义构造Selector
  */
-@property(nonatomic,copy) NSString* initializerSelectorString;
+@property(nonatomic, copy) NSString *initializerSelectorString;
 
 /**
  *  储存自定义构造参数
  */
-@property(nonatomic,copy) NSMutableArray *arguments;
+@property(nonatomic, copy) NSArray *arguments;
+
 @end

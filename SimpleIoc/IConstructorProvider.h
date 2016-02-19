@@ -16,7 +16,6 @@
  *
  *  @return 构造信息对象
  */
--(ConstructorInfo*) getConstructorInfo;
+- (ConstructorInfo *)getConstructorInfo;
 
-//-(void) build; 实现build方法 接受注入值
 @end
