@@ -24,7 +24,7 @@
  *  @param classKey 类的唯一标识
  *  @return 对象
  */
-- (id)getInstance:(Class) className key:(NSString*)classKey;
+- (id)getInstance:(Class) className key:(NSString *)classKey;
 
 /**
  *  根据类型获取自定义构造函数对象
@@ -55,7 +55,7 @@
  *
  *  @return 对象
  */
-- (id)getInstanceByProtocol:(Protocol*) protocol;
+- (id)getInstanceByProtocol:(Protocol*)protocol;
 
 /**
  *  根据协议类型获取对象
@@ -65,7 +65,7 @@
  *
  *  @return 对象
  */
-- (id)getInstanceByProtocol:(Protocol*) protocol protocolKey:(NSString*)key;
+- (id)getInstanceByProtocol:(Protocol*)protocol protocolKey:(NSString *)key;
 
 /**
  *  根据协议类型获取自定义构造对象
@@ -94,6 +94,6 @@
  *  @param className  服务类型的名字
  *  @return 所有注入的对象
  */
--(NSArray*) getAllInstance:(Class) className;
+-(NSArray*)getAllInstance:(Class) className;
 
 @end

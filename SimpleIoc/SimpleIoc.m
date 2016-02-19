@@ -22,10 +22,10 @@ typedef id (^makeInstance)(NSString *className, NSArray *args);
 @property (nonatomic, copy) NSArray *emptyArguments; //object[]
 @property (nonatomic, strong) NSMutableDictionary *factories;// Dictionary<Type,Dictionary<string,Delegate>>
 @property (nonatomic, strong) NSMutableDictionary *instancesRegistry; //Dictionary<Type,Dictionary<string,object>>
-@property (nonatomic, strong) NSMutableDictionary *interfaceToClassMap; //Dictionary<Type,Type>
+@property (nonatomic, strong) NSMutableDictionary <NSString *, NSString *> *interfaceToClassMap; //Dictionary<Type,Type>
 @property (nonatomic, strong) NSObject *syncLock;
 
-- (id)makeInstance:(NSString *)tClass arguments:(NSArray*)args;
+- (id)makeInstance:(NSString *)tClass arguments:(NSArray *)args;
 - (void)doRegister:(NSString *)className classType:(NSString *)type factory:(makeInstance)factory classKey:(NSString *)key;
 - (id)doGetService:(NSString *)serviceType key:(NSString *)key arguments:(NSArray*)args;
 @end
@@ -59,30 +59,30 @@ typedef id (^makeInstance)(NSString *className, NSArray *args);
 
 //////////////////// 实现ISimpleIoc ////////////////////
 //begin
-- (BOOL)containCreated:(NSString *) className {
-    return [self containCreated:className key:nil];
+- (BOOL)containCreated:(NSString *)className {
+    return [self containCreated:className classKey:nil];
 }
 
-- (BOOL)containCreated:(NSString *) className key:(Class)classKey {
+- (BOOL)containCreated:(NSString *)className classKey:(Class)key {
     if([self.instancesRegistry objectForKey:className] == nil) {
         return NO;
     }
     NSMutableDictionary *instances = [self.instancesRegistry objectForKey:className];
-    if(classKey == nil) {
+    if(key == nil) {
         instances = [self.instancesRegistry objectForKey:className];
         return instances > 0;
     }
-    if([instances objectForKey:classKey] == nil) {
+    if([instances objectForKey:key] == nil) {
         return NO;
     }
     return YES;
 }
 
-- (BOOL)isRegistered:(NSString *) className {
+- (BOOL)isRegistered:(NSString *)className {
     return [self isRegistered:className key:self.defaultKey];
 }
 
-- (BOOL)isRegistered:(NSString *) className key:(Class)classKey {
+- (BOOL)isRegistered:(NSString *)className key:(Class)classKey {
     NSString *name = className;
     if([self.interfaceToClassMap objectForKey:name] == nil || [self.factories objectForKey:name] == nil) {
         return NO;
@@ -94,11 +94,11 @@ typedef id (^makeInstance)(NSString *className, NSArray *args);
     return YES;
 }
 
-- (void)registerInstance:(Protocol*) interfaceName tClassName:(Class) className {
+- (void)registerInstance:(Protocol*)interfaceName tClassName:(Class) className {
     [self registerInstance:interfaceName tClassName:className createInstanceImmediately:NO];
 }
 
-- (void)registerInstance:(Protocol*) interfaceName tClassName:(Class) className createInstanceImmediately:(BOOL)createInstanceImmediately {
+- (void)registerInstance:(Protocol*)interfaceName tClassName:(Class) className createInstanceImmediately:(BOOL)createInstanceImmediately {
     [self registerInstance:interfaceName tClassName:className createInstanceImmediately:createInstanceImmediately key:self.defaultKey];
 }
 
@@ -247,7 +247,7 @@ typedef id (^makeInstance)(NSString *className, NSArray *args);
 }
 
 
-- (void)unRegisterInstance:(NSString *) className {
+- (void)unRegisterInstance:(NSString *)className {
     OSSpinLockLock(&_lock);
     NSString *serviceType = className;
     NSString *resolveTo;
@@ -275,7 +275,7 @@ typedef id (^makeInstance)(NSString *className, NSArray *args);
     OSSpinLockUnlock(&_lock);
 }
 
-- (void)unRegisterInstance:(NSString *) className instance:(id)instance {
+- (void)unRegisterInstance:(NSString *)className instance:(id)instance {
     OSSpinLockLock(&_lock);
     NSString *classType = className;
     if([self.instancesRegistry objectForKey:classType]) {
@@ -306,7 +306,7 @@ typedef id (^makeInstance)(NSString *className, NSArray *args);
     OSSpinLockUnlock(&_lock);
 }
 
-- (void)unRegisterInstance:(NSString *) className key:(NSString *)classKey {
+- (void)unRegisterInstance:(NSString *)className key:(NSString *)classKey {
     OSSpinLockLock(&_lock);
     NSString *classType = className;
     if([self.instancesRegistry objectForKey:classType]) {

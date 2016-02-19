@@ -61,7 +61,7 @@ return nil; \
 
 //第一个参数为需要构造的selector 一般指定到增加了零件对应参数的init方法上  第二个参数 是需要构造的零件 的协议 或者是Class 该零件与init的参数一一对应
 #define simpleIoc_ctorInfoWithSelector(buildSelector, args...) \
--(ConstructorInfo *) getConstructorInfo { \
+-(ConstructorInfo *)getConstructorInfo { \
 ConstructorInfo *ctor = [[ConstructorInfo alloc] init]; \
 ctor.buildSelectorString = NSStringFromSelector(buildSelector); \
 id objs[] = {args}; \
@@ -71,7 +71,7 @@ return ctor; \
 
 //第一个参数为需要构造的selector 一般指定到非init方法上  第二个selector 指定到 自定义构造函数上  第三个参数 是需要构造的零件 的协议 或者是Class
 #define simpleIoc_ctorInfoWithSelectorCustomInit(buildSelector,initSelector, args...) \
--(ConstructorInfo *) getConstructorInfo { \
+-(ConstructorInfo *)getConstructorInfo { \
 ConstructorInfo *ctor = [[ConstructorInfo alloc] init]; \
 ctor.buildSelectorString = NSStringFromSelector(buildSelector); \
 ctor.initializerSelectorString = NSStringFromSelector(initSelector); \

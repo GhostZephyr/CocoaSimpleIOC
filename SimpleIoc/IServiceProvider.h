@@ -15,5 +15,5 @@
  *  @param className  服务类型的名字
  *  @return 对象
  */
--(id) getSerivce:(NSString*) className;
+- (id)getSerivce:(NSString *)className;
 @end
