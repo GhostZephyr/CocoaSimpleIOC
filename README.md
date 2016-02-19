@@ -6,18 +6,37 @@ Simple Ioc for Objective-c  from MvvmLight
 
 你可以这样注册单例
 
+
+
 [[SimpleIoc defaultInstance] registerInstance:[SampleUIViewControl class]];
 [[SimpleIoc defaultInstance] registerInstance:[MainViewModel class]];
 [[SimpleIoc defaultInstance] registerInstance:[MainViewModel class] createInstanceImmediately:NO key:@"OtherMainView"];
 
+
+
+
+
 可以这么注册对应协议的实现
+
+
+
+
+
+
 [[SimpleIoc defaultInstance] registerInstance:@protocol(ITestServiceA) tClassName:[TestServiceA class]];
 [[SimpleIoc defaultInstance] registerInstance:@protocol(ITestServiceB) tClassName:[TestServiceB class]];
 [[SimpleIoc defaultInstance] registerInstance:@protocol(ITestServiceC) tClassName:[TestServiceC class]];
 
 
 
+
+
 在对象中声明需要的工厂零件
+
+
+
+
+
 
 @implementation TestViewController
 
@@ -50,8 +69,23 @@ Simple Ioc for Objective-c  from MvvmLight
 @end
 
 
+
+
+
+
+
+
 然后我们从工厂中拿到这个对象
+
+
+
+
+
 TestViewController *viewController = [[SimpleIoc defaultInstance] getInstance:[TestViewController class]];
+
+
+
+工厂负责组装这些单例的零件，你并不需知道实现
 
 2016-02-19 16:57:40.275 SimpleIocTest[7294:741970] 工厂构造了 TestServiceViewController 并注入了 testService:OK
 2016-02-19 16:57:40.276 SimpleIocTest[7294:741970] 已加载TestViewController viewDidLoad
