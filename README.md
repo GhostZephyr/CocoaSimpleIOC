@@ -1,7 +1,7 @@
-SimpleIoc-For-Objective-c
+CocoaSimpleIOC
 =========================
 
-Simple Ioc for Objective-c  from MvvmLight
+Simple IOC for Objective-c  from MVVMLight
 
 
 你可以这样注册单例
